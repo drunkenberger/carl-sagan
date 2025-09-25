@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El Mundo de Carl Sagan - Aventura Espacial</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* Header fijo */
+        .main-header {
+            background: linear-gradient(135deg, #1a1a2e, #0f3460);
+            padding: 20px;
+            text-align: center;
+            border-bottom: 3px solid #ffd700;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+            position: relative;
+            z-index: 1000;
+            flex-shrink: 0;
+        }
+
+        .main-header h1 {
+            color: #ffd700;
+            font-size: clamp(1.5em, 4vw, 2.5em);
+            margin: 0;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.7);
+            animation: titleGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes titleGlow {
+            0%, 100% { text-shadow: 3px 3px 6px rgba(0,0,0,0.7); }
+            50% { text-shadow: 3px 3px 20px rgba(255,215,0,0.5); }
+        }
+
+        .main-header p {
+            color: #87ceeb;
+            font-size: clamp(1em, 2.5vw, 1.3em);
+            margin: 10px 0 0;
+            animation: subtitleFloat 4s ease-in-out infinite;
+        }
+
+        @keyframes subtitleFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-3px); }
+        }
+
+        /* Navegación */
+        .nav-buttons {
+            margin-top: 15px;
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            background: linear-gradient(45deg, #4CAF50, #45a049);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            border: 2px solid transparent;
+        }
+
+        .nav-btn:hover {
+            transform: scale(1.1);
+            border-color: #ffd700;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        /* Contenedor del iframe */
+        .game-frame-container {
+            flex: 1;
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+        }
+
+        /* Iframe del juego */
+        .game-iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: block;
+        }
+
+        /* Loading message */
+        .loading-message {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #ffd700;
+            font-size: 1.5em;
+            text-align: center;
+            z-index: -1;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .main-header {
+                padding: 15px;
+            }
+
+            .main-header h1 {
+                font-size: 1.3em;
+            }
+
+            .main-header p {
+                font-size: 0.9em;
+            }
+
+            .nav-buttons {
+                margin-top: 10px;
+                gap: 10px;
+            }
+
+            .nav-btn {
+                padding: 8px 16px;
+                font-size: 0.9em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-header h1 {
+                font-size: 1.1em;
+            }
+
+            .main-header p {
+                font-size: 0.8em;
+            }
+
+            .nav-btn {
+                padding: 7px 14px;
+                font-size: 0.85em;
+            }
+        }
+
+        /* Estrellas de fondo */
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 2s infinite alternate;
+        }
+
+        @keyframes twinkle {
+            0% { opacity: 0.3; transform: scale(0.8); }
+            100% { opacity: 1; transform: scale(1.2); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Estrellas de fondo -->
+    <div class="stars" id="stars"></div>
+
+    <!-- Header principal -->
+    <header class="main-header">
+        <h1>🚀 El Mundo de Carl Sagan para Niños 🌟</h1>
+        <p>Aventura Espacial Interactiva</p>
+
+        <nav class="nav-buttons">
+            <a href="/index.html" class="nav-btn">🏠 Inicio</a>
+            <button onclick="reloadGame()" class="nav-btn">🔄 Reiniciar Juego</button>
+            <button onclick="toggleFullscreen()" class="nav-btn">📱 Pantalla Completa</button>
+        </nav>
+    </header>
+
+    <!-- Contenedor del iframe -->
+    <div class="game-frame-container">
+        <div class="loading-message">
+            <p>🌟 Cargando aventura espacial... 🚀</p>
+        </div>
+        <iframe
+            id="gameFrame"
+            class="game-iframe"
+            src="juego_carl.html"
+            title="Aventura Espacial con Carl Sagan"
+            allowfullscreen>
+        </iframe>
+    </div>
+
+    <script>
+        // Crear estrellas de fondo
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            for (let i = 0; i < 50; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.width = star.style.height = Math.random() * 3 + 1 + 'px';
+                star.style.animationDelay = Math.random() * 2 + 's';
+                starsContainer.appendChild(star);
+            }
+        }
+
+        // Recargar el juego
+        function reloadGame() {
+            const iframe = document.getElementById('gameFrame');
+            iframe.src = iframe.src;
+        }
+
+        // Toggle pantalla completa
+        function toggleFullscreen() {
+            const elem = document.documentElement;
+            if (!document.fullscreenElement) {
+                elem.requestFullscreen().catch(err => {
+                    alert(`Error al entrar en pantalla completa: ${err.message}`);
+                });
+            } else {
+                document.exitFullscreen();
+            }
+        }
+
+        // Inicializar
+        createStars();
+
+        // Ajustar altura del iframe cuando cambie el tamaño de la ventana
+        window.addEventListener('resize', () => {
+            const iframe = document.getElementById('gameFrame');
+            const container = document.querySelector('.game-frame-container');
+            if (iframe && container) {
+                iframe.style.height = container.clientHeight + 'px';
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El Mundo de Carl Sagan para Niños 🚀</title>
+    <meta name="description" content="Sitio web educativo sobre Carl Sagan y el cosmos para niños de 5 años. Juegos, cuentos y aventuras espaciales.">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One:wght@400&family=Nunito:wght@400;600;700;800&family=Bubblegum+Sans:wght@400&family=Righteous:wght@400&display=swap" rel="stylesheet">
+
+    <!-- ElevenLabs Conversational AI Widget -->
+    <script src="https://unpkg.com/@elevenlabs/convai-widget-embed" async type="text/javascript"></script>
+</head>
+<body>
+    <div class="stars"></div>
+    <div class="stars2"></div>
+    <div class="stars3"></div>
+
+    <header class="header" role="banner">
+        <div class="header-content">
+            <h1 class="main-title" id="header-title-001">
+                <span class="title-star left-star">🌟</span>
+                <span class="title-text">Conociendo a Carl Sagan</span>
+                <span class="title-star right-star">🌟</span>
+            </h1>
+            <p class="subtitle" id="header-subtitle-001">¡Explora el universo con Carl Sagan!</p>
+        </div>
+    </header>
+
+    <main class="main-container" role="main">
+        <section class="hero-section" aria-labelledby="hero-title-001">
+            <!-- Carousel de Fotos de Carl Sagan -->
+            <div class="carl-photo-carousel" id="carl-carousel-001" aria-label="Fotografías de Carl Sagan">
+                <div class="carousel-container">
+                    <div class="carousel-track" id="carousel-track">
+                        <div class="carousel-slide active" data-slide="0">
+                            <picture class="carl-photo">
+                                <source srcset="images/carl-photos/carl-sagan-photo-1.webp" type="image/webp">
+                                <img src="images/carl-photos/carl-sagan-photo-1.webp" alt="Carl Sagan joven estudiando las estrellas" loading="lazy" id="carl-photo-001">
+                            </picture>
+                        </div>
+                        <div class="carousel-slide" data-slide="1">
+                            <picture class="carl-photo">
+                                <source srcset="images/carl-photos/carl-sagan-photo-2.jpg" type="image/jpeg">
+                                <img src="images/carl-photos/carl-sagan-photo-2.jpg" alt="Carl Sagan en su laboratorio" loading="lazy" id="carl-photo-002">
+                            </picture>
+                        </div>
+                        <div class="carousel-slide" data-slide="2">
+                            <picture class="carl-photo">
+                                <source srcset="images/carl-photos/carl-sagan-photo-3.webp" type="image/webp">
+                                <img src="images/carl-photos/carl-sagan-photo-3.webp" alt="Carl Sagan explicando sobre el universo" loading="lazy" id="carl-photo-003">
+                            </picture>
+                        </div>
+                    </div>
+                    <button class="carousel-btn carousel-prev" onclick="previousSlide()" aria-label="Foto anterior de Carl Sagan" id="carousel-prev-001">
+                        ←
+                    </button>
+                    <button class="carousel-btn carousel-next" onclick="nextSlide()" aria-label="Siguiente foto de Carl Sagan" id="carousel-next-001">
+                        →
+                    </button>
+                </div>
+                <div class="carousel-indicators" id="carousel-indicators">
+                    <button class="indicator active" onclick="goToSlide(0)" aria-label="Ver primera foto" data-slide="0"></button>
+                    <button class="indicator" onclick="goToSlide(1)" aria-label="Ver segunda foto" data-slide="1"></button>
+                    <button class="indicator" onclick="goToSlide(2)" aria-label="Ver tercera foto" data-slide="2"></button>
+                </div>
+            </div>
+
+            <div class="carl-intro">
+                <div class="carl-avatar" role="img" aria-label="Carl Sagan sonriendo">
+                    <div class="avatar-emoji" id="hero-avatar-001">👨‍🔬</div>
+                </div>
+                <div class="welcome-message">
+                    <h2 id="hero-title-001">¡Hola pequeño explorador!</h2>
+                    <p id="hero-message-001">Soy Carl Sagan y juntos vamos a descubrir las maravillas del universo. ¿Estás listo para esta aventura cósmica?</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="activities-grid" role="region" aria-labelledby="activities-title-001">
+            <h2 id="activities-title-001" class="activities-title">¿Qué aventura quieres vivir?</h2>
+
+            <article class="activity-card game-card" id="activities-game-001" role="button" tabindex="0" aria-describedby="game-description-001">
+                <div class="card-icon game-icon" aria-hidden="true">🎮</div>
+                <h3 class="card-title">Juego Espacial</h3>
+                <p class="card-description" id="game-description-001">¡Viaja por los planetas y aprende jugando!</p>
+                <button class="activity-btn game-btn" onclick="abrirJuego()" id="game-button-001" aria-label="Iniciar juego espacial">
+                    ¡Jugar Ahora!
+                </button>
+            </article>
+
+            <article class="activity-card story-card" id="activities-story-001" role="button" tabindex="0" aria-describedby="story-description-001">
+                <div class="card-icon story-icon" aria-hidden="true">📖</div>
+                <h3 class="card-title">Cuento Digital</h3>
+                <p class="card-description" id="story-description-001">Lee un cuento interactivo sobre las estrellas</p>
+                <button class="activity-btn story-btn" onclick="abrirCuento()" id="story-button-001" aria-label="Leer cuento digital del cosmos">
+                    ¡Leer Cuento!
+                </button>
+            </article>
+
+            <article class="activity-card audiostory-card" id="activities-audiostory-001" role="button" tabindex="0" aria-describedby="audiostory-description-001">
+                <div class="card-icon audiostory-icon" aria-hidden="true">🎧</div>
+                <h3 class="card-title">Audio Cuento</h3>
+                <p class="card-description" id="audiostory-description-001">Escucha un cuento narrado sobre el cosmos</p>
+                <button class="activity-btn audiostory-btn" onclick="abrirAudioCuento()" id="audiostory-button-001" aria-label="Escuchar audio cuento del cosmos">
+                    ¡Escuchar!
+                </button>
+            </article>
+
+            <article class="activity-card videos-card" id="activities-videos-001" role="button" tabindex="0" aria-describedby="videos-description-001">
+                <div class="card-icon videos-icon" aria-hidden="true">🌌</div>
+                <h3 class="card-title">Videos de Cosmos</h3>
+                <p class="card-description" id="videos-description-001">Mira la famosa serie de Carl Sagan</p>
+                <button class="activity-btn videos-btn" onclick="abrirVideos()" id="videos-button-001" aria-label="Ver videos de la serie Cosmos">
+                    ¡Ver Videos!
+                </button>
+            </article>
+
+            <article class="activity-card chat-card" id="activities-chat-001" role="button" tabindex="0" aria-describedby="chat-description-001">
+                <div class="card-icon chat-icon" aria-hidden="true">🤖</div>
+                <h3 class="card-title">Habla con Carlito</h3>
+                <p class="card-description" id="chat-description-001">Hazle preguntas a Carlito, una joven computadora experta en Carl Sagan</p>
+                <button class="activity-btn chat-btn" onclick="hablarConCarl()" id="chat-button-001" aria-label="Hablar con Carlito">
+                    ¡Preguntar!
+                </button>
+            </article>
+
+            <article class="activity-card biography-card" id="activities-biography-001" role="button" tabindex="0" aria-describedby="biography-description-001">
+                <div class="card-icon biography-icon" aria-hidden="true">👨‍🔭</div>
+                <h3 class="card-title">¿Quién fue Carl Sagan?</h3>
+                <p class="card-description" id="biography-description-001">Conoce la historia de este gran científico</p>
+                <button class="activity-btn biography-btn" onclick="abrirBiografia()" id="biography-button-001" aria-label="Conocer la biografía de Carl Sagan">
+                    ¡Descubrir!
+                </button>
+            </article>
+        </section>
+
+        <!-- Sección del Juego -->
+        <section id="juego-section" class="content-section hidden" role="region" aria-labelledby="game-title-002">
+            <button class="back-btn modern-back-btn" onclick="volverInicio()" id="game-back-001" aria-label="Volver al menú principal">
+                ← Volver
+            </button>
+            <h2 id="game-title-002" class="section-title">🎮 Juego Espacial</h2>
+            <div class="game-container modern-container" role="application" aria-label="Área de juego espacial">
+                <iframe id="juego-iframe" src="" frameborder="0" title="Juego espacial interactivo"></iframe>
+            </div>
+        </section>
+
+        <!-- Sección del Cuento Digital -->
+        <section id="cuento-section" class="content-section hidden" role="region" aria-labelledby="story-title-002">
+            <button class="back-btn modern-back-btn" onclick="volverInicio()" id="story-back-001" aria-label="Volver al menú principal">
+                ← Volver
+            </button>
+            <h2 id="story-title-002" class="section-title">📖 Las Aventuras de Carl en el Cosmos</h2>
+
+            <!-- Visor del Cuento Digital -->
+            <div class="digital-story-viewer" role="document" aria-label="Visor interactivo del cuento digital">
+                <!-- Información del cuento -->
+                <div class="story-header">
+                    <div class="story-progress">
+                        <span class="page-counter" id="page-counter">Página <span id="current-page">1</span> de <span id="total-pages">15</span></span>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progress-fill"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contenedor principal del cuento -->
+                <div class="story-book">
+                    <!-- Área de la imagen -->
+                    <div class="story-page-container">
+                        <div class="story-page" id="story-page">
+                            <img id="story-image"
+                                 src="assets/cuento/cuento-digital/carlcuento1.png"
+                                 alt="Página 1 del cuento de Carl Sagan"
+                                 loading="lazy">
+                            <div class="page-overlay" id="page-overlay"></div>
+                        </div>
+
+                        <!-- Efectos mágicos -->
+                        <div class="magic-sparkles" id="magic-sparkles"></div>
+                    </div>
+
+                    <!-- Controles de navegación -->
+                    <div class="story-controls">
+                        <button class="story-btn prev-btn" id="prev-btn" onclick="previousStoryPage()" aria-label="Página anterior" disabled>
+                            <span class="btn-icon">⬅️</span>
+                            <span class="btn-text">Anterior</span>
+                        </button>
+
+                        <button class="story-btn auto-play-btn" id="auto-play-btn" onclick="toggleAutoPlay()" aria-label="Reproducción automática">
+                            <span class="btn-icon">⏯️</span>
+                            <span class="btn-text">Auto</span>
+                        </button>
+
+                        <button class="story-btn next-btn" id="next-btn" onclick="nextStoryPage()" aria-label="Página siguiente">
+                            <span class="btn-text">Siguiente</span>
+                            <span class="btn-icon">➡️</span>
+                        </button>
+                    </div>
+
+                    <!-- Miniaturas de páginas -->
+                    <div class="story-thumbnails" id="story-thumbnails">
+                        <!-- Se generarán dinámicamente -->
+                    </div>
+                </div>
+
+                <!-- Instrucciones -->
+                <div class="story-instructions">
+                    <div class="instruction-card">
+                        <h4>🌟 ¿Cómo leer el cuento?</h4>
+                        <p>Usa los botones "Anterior" y "Siguiente" para navegar por las páginas, o activa el modo "Auto" para que el cuento pase las páginas solo. ¡También puedes hacer clic en las miniaturas para saltar a cualquier página!</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección del Audio Cuento -->
+        <section id="audiocuento-section" class="content-section hidden" role="region" aria-labelledby="audiostory-title-002">
+            <button class="back-btn modern-back-btn" onclick="volverInicio()" id="audiostory-back-001" aria-label="Volver al menú principal">
+                ← Volver
+            </button>
+            <h2 id="audiostory-title-002" class="section-title">🎧 Audio Cuento del Cosmos</h2>
+            <div class="audiostory-container modern-container">
+                <div class="audio-story-player">
+                    <div class="story-cover" id="story-cover-001">
+                        <div class="cover-icon">📚</div>
+                        <h3 class="story-title">Las Aventuras de Carl en el Espacio</h3>
+                    </div>
+                    <audio controls class="modern-audio-player story-audio" id="audio-cuento-001" aria-label="Reproducir audio cuento">
+                        <source src="assets/cuento/audio_cuento_carl.mp3" type="audio/mpeg">
+                        Tu navegador no soporta el elemento de audio.
+                    </audio>
+                    <div class="story-description">
+                        <p>🌟 Acompaña a Carl Sagan en una aventura mágica por el universo, donde conocerás planetas, estrellas y galaxias lejanas.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección de Videos -->
+        <section id="videos-section" class="content-section hidden" role="region" aria-labelledby="videos-title-002">
+            <button class="back-btn modern-back-btn" onclick="volverInicio()" id="videos-back-001" aria-label="Volver al menú principal">
+                ← Volver
+            </button>
+            <h2 id="videos-title-002" class="section-title">🌌 Videos de Cosmos</h2>
+            <div class="videos-container modern-container">
+                <div class="video-info">
+                    <div class="series-description">
+                        <h3>🎆 La Serie Cosmos de Carl Sagan</h3>
+                        <p>Acompaña a Carl Sagan en un viaje extraordinario por el universo. La serie "Cosmos" es una de las producciones más importantes de la divulgación científica, donde Carl nos explica los misterios del espacio de una manera fascinante.</p>
+                    </div>
+                </div>
+                <div class="video-player-wrapper">
+                    <div class="youtube-container">
+                        <iframe
+                            class="youtube-iframe"
+                            id="cosmos-video-001"
+                            src="https://www.youtube.com/embed/YU5I4M3x7zU?start=78&rel=0&modestbranding=1&color=white"
+                            title="Cosmos: Un Viaje Personal - Carl Sagan"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            allowfullscreen
+                            loading="lazy">
+                        </iframe>
+                    </div>
+                    <div class="video-description">
+                        <h4>🚀 Episodio 1: "Las Orillas del Océano Cósmico"</h4>
+                        <p>En este primer episodio, Carl Sagan nos introduce al concepto del cosmos como un océano cósmico, explorando las vastas escalas del universo y nuestro lugar en él.</p>
+                        <div class="video-features">
+                            <span class="feature-tag">🌌 Exploración del Universo</span>
+                            <span class="feature-tag">🔭 Ciencia Divulgativa</span>
+                            <span class="feature-tag">✨ Filosofía Cósmica</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección de Biografía -->
+        <section id="biografia-section" class="content-section hidden" role="region" aria-labelledby="biography-title-002">
+            <button class="back-btn modern-back-btn" onclick="volverInicio()" id="biography-back-001" aria-label="Volver al menú principal">
+                ← Volver
+            </button>
+            <h2 id="biography-title-002" class="section-title">👨‍🔭 ¿Quién fue Carl Sagan?</h2>
+            <div class="biography-container modern-container">
+                <div class="presentation-wrapper">
+                    <iframe
+                        src="https://gamma.app/embed/asfk2f9o1o5w1t9"
+                        class="biography-iframe"
+                        id="biography-iframe-001"
+                        allow="fullscreen"
+                        title="¿Quién fue Carl Sagan? - Presentación interactiva"
+                        loading="lazy"
+                        aria-label="Presentación interactiva sobre la vida de Carl Sagan">
+                    </iframe>
+                    <div class="external-link-overlay">
+                        <button class="external-link-btn" onclick="openExternalPresentation()" aria-label="Abrir presentación en nueva ventana">
+                            <span class="external-icon">🔗</span>
+                            <span>Ver en Gamma</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="biography-info">
+                    <div class="info-card">
+                        <h3>🌟 Descubre la historia de Carl Sagan</h3>
+                        <p>Una presentación interactiva que te contará todo sobre la vida de este gran científico, desde su infancia hasta sus grandes descubrimientos sobre el cosmos.</p>
+                        <ul class="biography-highlights">
+                            <li>👶 Su infancia y primeros sueños</li>
+                            <li>🔭 Sus estudios y carrera científica</li>
+                            <li>📺 La famosa serie "Cosmos"</li>
+                            <li>🚀 Sus contribuciones a la exploración espacial</li>
+                            <li>✨ Su legado para las futuras generaciones</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección de Chat con Carlito -->
+        <section id="chat-section" class="content-section hidden" role="region" aria-labelledby="chat-title-002">
+            <button class="back-btn modern-back-btn" onclick="volverInicio()" id="chat-back-001" aria-label="Volver al menú principal">
+                ← Volver
+            </button>
+            <h2 id="chat-title-002" class="section-title">🤖 Habla con Carlito</h2>
+
+            <!-- Interfaz del Agente de Voz ElevenLabs -->
+            <div class="voice-agent-container">
+                <div class="agent-info">
+                    <div class="agent-avatar">
+                        <span class="agent-emoji">🤖</span>
+                        <h3>Carlito</h3>
+                        <p>Tu agente de voz experto en Carl Sagan</p>
+                    </div>
+                </div>
+
+                <!-- Widget ElevenLabs Embebido -->
+                <div class="elevenlabs-widget-container" id="widget-container">
+                    <elevenlabs-convai agent-id="agent_4901k5yvxxv4e49988m437sn6wb2"></elevenlabs-convai>
+                </div>
+
+                <div class="agent-description">
+                    <div class="description-card">
+                        <h4>🌟 Acerca de Carlito:</h4>
+                        <p>Carlito está integrado directamente aquí. Puedes hablar con él sobre el cosmos, las estrellas, los planetas y todo lo relacionado con el universo.</p>
+
+                        <h4>💫 ¿Qué puedes preguntarle?</h4>
+                        <ul>
+                            <li>¿Quién fue Carl Sagan?</li>
+                            <li>¿Qué son las estrellas?</li>
+                            <li>¿Cómo es el espacio?</li>
+                            <li>¿Hay vida en otros planetas?</li>
+                            <li>¡Y mucho más sobre el cosmos!</li>
+                        </ul>
+
+                        <div class="widget-instructions">
+                            <h4>🎤 Cómo usar:</h4>
+                            <p>Haz clic en el micrófono del widget de arriba y empieza a hablar con Carlito. ¡Él te responderá con su voz!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección de Datos Curiosos -->
+        <section class="fun-facts modern-facts" role="region" aria-labelledby="facts-title-001">
+            <h2 id="facts-title-001" class="facts-title">¿Sabías que...?</h2>
+            <div class="facts-carousel modern-carousel" id="facts-carousel" aria-live="polite" aria-label="Datos curiosos sobre el cosmos">
+                <article class="fact-card modern-fact-card active" id="fact-earth-001">
+                    <p class="fact-text">🌍 La Tierra es como una pequeña canica azul en el espacio</p>
+                </article>
+                <article class="fact-card modern-fact-card" id="fact-stars-001">
+                    <p class="fact-text">⭐ Hay más estrellas en el cielo que granos de arena en todas las playas</p>
+                </article>
+                <article class="fact-card modern-fact-card" id="fact-moon-001">
+                    <p class="fact-text">🌙 La Luna se aleja un poquito de la Tierra cada año</p>
+                </article>
+                <article class="fact-card modern-fact-card" id="fact-sun-001">
+                    <p class="fact-text">☀️ El Sol es tan grande que cabrían un millón de Tierras dentro</p>
+                </article>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal Fullscreen para Presentación -->
+    <div class="fullscreen-modal" id="fullscreen-modal" role="dialog" aria-labelledby="modal-title" aria-hidden="true">
+        <div class="modal-overlay" onclick="closePresentationFullscreen()"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modal-title" class="modal-title">
+                    <span class="modal-icon">🧑‍🔬</span>
+                    ¿Quién fue Carl Sagan?
+                </h3>
+                <button class="modal-close" onclick="closePresentationFullscreen()" aria-label="Cerrar presentación">
+                    ✕
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="fullscreen-options">
+                    <div class="option-card" onclick="loadEmbedInModal()">
+                        <div class="option-icon">📺</div>
+                        <h4>Ver embebido</h4>
+                        <p>Presentación integrada aquí</p>
+                    </div>
+                    <div class="option-card" onclick="openExternalPresentation()">
+                        <div class="option-icon">🚀</div>
+                        <h4>Abrir en Gamma</h4>
+                        <p>Experiencia completa en nueva ventana</p>
+                    </div>
+                </div>
+                <iframe
+                    src=""
+                    class="fullscreen-iframe hidden"
+                    id="fullscreen-iframe"
+                    allow="fullscreen"
+                    title="¿Quién fue Carl Sagan? - Presentación completa"
+                    loading="lazy">
+                </iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- Radio Cosmos Widget Flotante -->
+    <div class="radio-cosmos-widget" id="radio-widget" role="region" aria-labelledby="radio-widget-title">
+        <div class="radio-header">
+            <h3 id="radio-widget-title" class="radio-title">
+                <span class="radio-icon">📻</span>
+                Radio Cosmos
+            </h3>
+            <button class="radio-toggle" onclick="toggleRadioWidget()" id="radio-toggle-001" aria-label="Minimizar/Expandir Radio Cosmos">
+                <span class="toggle-icon">−</span>
+            </button>
+        </div>
+        <div class="radio-content" id="radio-content">
+            <div class="radio-display">
+                <div class="frequency-display" id="frequency-display">
+                    <span class="frequency-number">107.5</span>
+                    <span class="frequency-unit">FM</span>
+                </div>
+                <div class="song-info" id="song-info">
+                    <div class="song-title" id="current-song-title">Carl Sagan Superstar</div>
+                    <div class="artist-name">Radio Cosmos</div>
+                </div>
+            </div>
+            <div class="radio-controls">
+                <button class="control-btn prev-btn" onclick="previousTrack()" id="radio-prev-001" aria-label="Canción anterior">
+                    ⏪
+                </button>
+                <button class="control-btn play-pause-btn" onclick="togglePlayPause()" id="radio-play-001" aria-label="Reproducir/Pausar">
+                    <span class="play-icon" id="play-icon">▶️</span>
+                </button>
+                <button class="control-btn next-btn" onclick="nextTrack()" id="radio-next-001" aria-label="Siguiente canción">
+                    ⏩
+                </button>
+            </div>
+            <div class="volume-control">
+                <span class="volume-icon">🔊</span>
+                <input type="range" class="volume-slider" id="volume-slider" min="0" max="100" value="70" aria-label="Control de volumen">
+                <span class="volume-value" id="volume-value">70%</span>
+            </div>
+            <div class="radio-visualizer" id="radio-visualizer" aria-hidden="true">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>
+        </div>
+        <audio id="radio-audio" preload="metadata">
+            <source src="assets/canciones/Carl Sagan Superstar.mp3" type="audio/mpeg">
+        </audio>
+    </div>
+
+    <footer class="footer modern-footer" role="contentinfo">
+        <div class="footer-content">
+            <p class="footer-text" id="footer-message-001">Hecho con ❤️ para pequeños exploradores del cosmos</p>
+            <p class="footer-text" id="footer-tribute-001">Inspirado en Carl Sagan (1934-1996)</p>
+            <p class="footer-text" id="footer-environment-001">Ambiente Morado - Semillas 2025</p>
+        </div>
+    </footer>
+
+    <!-- Elementos flotantes decorativos -->
+    <div class="floating-elements modern-floating" aria-hidden="true">
+        <div class="planet planet1 modern-planet" id="floating-saturn-001">🪐</div>
+        <div class="planet planet2 modern-planet" id="floating-earth-001">🌍</div>
+        <div class="rocket modern-rocket" id="floating-rocket-001">🚀</div>
+        <div class="star star1 modern-star" id="floating-star1-001">⭐</div>
+        <div class="star star2 modern-star" id="floating-star2-001">✨</div>
+        <div class="comet modern-comet" id="floating-comet-001">☄️</div>
+        <div class="astronaut modern-astronaut" id="floating-astronaut-001">👩‍🚀</div>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script src="js/elevenlabs.js"></script>
+</body>
+</html>
