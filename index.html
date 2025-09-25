@@ -119,9 +119,27 @@
                     ¡Descubrir!
                 </button>
             </article>
+
+            <article class="activity-card game-card" id="activities-game-001" role="button" tabindex="0" aria-describedby="game-description-001">
+                <div class="card-icon game-icon" aria-hidden="true">🎮</div>
+                <h3 class="card-title">Juego Espacial</h3>
+                <p class="card-description" id="game-description-001">¡Viaja por los planetas y aprende jugando!</p>
+                <button class="activity-btn game-btn" onclick="abrirJuego()" id="game-button-001" aria-label="Iniciar juego espacial">
+                    ¡Jugar Ahora!
+                </button>
+            </article>
         </section>
 
-        <!-- Sección del juego removida completamente -->
+        <!-- Sección del Juego -->
+        <section id="juego-section" class="content-section hidden" role="region" aria-labelledby="game-title-002">
+            <button class="back-btn modern-back-btn" onclick="volverInicio()" id="game-back-001" aria-label="Volver al menú principal">
+                ← Volver
+            </button>
+            <h2 id="game-title-002" class="section-title">🎮 Juego Espacial</h2>
+            <div class="game-container modern-container" role="application" aria-label="Área de juego espacial">
+                <iframe id="juego-iframe" src="" frameborder="0" title="Juego espacial interactivo"></iframe>
+            </div>
+        </section>
 
         <!-- Sección del Cuento Digital -->
         <section id="cuento-section" class="content-section hidden" role="region" aria-labelledby="story-title-002">

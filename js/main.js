@@ -9,7 +9,11 @@ let carouselInterval;
 const CAROUSEL_INTERVAL = 5000; // 5 segundos
 
 // Funciones de navegación
-// Función abrirJuego() removida - ya no hay tarjeta de juego
+function abrirJuego() {
+    // Ir directamente al juego clásico original
+    window.location.href = 'assets/juego/juego_carl.html';
+    reproducirSonido('click');
+}
 
 function abrirCuento() {
     ocultarTodo();
