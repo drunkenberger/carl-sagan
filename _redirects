@@ -1,0 +1,10 @@
+# Redirecciones para Netlify
+# Archivos existentes se sirven directamente
+/index.html                    /index.html                   200
+/assets/*                      /assets/:splat               200
+/css/*                         /css/:splat                  200
+/js/*                          /js/:splat                   200
+/images/*                      /images/:splat               200
+
+# Redirección por defecto para cualquier ruta no encontrada
+/*                            /index.html                   200

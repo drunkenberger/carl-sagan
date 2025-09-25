@@ -2,15 +2,21 @@
 
 [build]
   publish = "."
+  command = "echo 'Static site, no build needed'"
 
+[build.environment]
+  NODE_VERSION = "18"
+
+# Headers de seguridad
 [[headers]]
   for = "/*"
   [headers.values]
-    X-Frame-Options = "DENY"
     X-XSS-Protection = "1; mode=block"
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "no-referrer-when-downgrade"
+    X-Frame-Options = "SAMEORIGIN"
 
+# Cache para assets estáticos
 [[headers]]
   for = "/assets/*"
   [headers.values]
@@ -31,17 +37,15 @@
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
 
-# Redirecciones para SPA si agregas rutas en el futuro
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
-  conditions = {Role = ["admin", "user"]}
-
-# Configuración CORS para la API de ElevenLabs
+# Headers para archivos multimedia
 [[headers]]
-  for = "/api/*"
+  for = "/*.mp3"
   [headers.values]
-    Access-Control-Allow-Origin = "*"
-    Access-Control-Allow-Methods = "GET, POST, OPTIONS"
-    Access-Control-Allow-Headers = "Content-Type, xi-api-key"
+    Cache-Control = "public, max-age=31536000, immutable"
+    Content-Type = "audio/mpeg"
+
+[[headers]]
+  for = "/*.webp"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+    Content-Type = "image/webp"
