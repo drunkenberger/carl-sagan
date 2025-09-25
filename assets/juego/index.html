@@ -3,22 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aventura Espacial con Carl Sagan - Súper Animada</title>
+    <title>Juego - El Mundo de Carl Sagan</title>
     <style>
-        * {
+        body {
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
             font-family: 'Comic Sans MS', cursive, sans-serif;
-            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+            background: linear-gradient(135deg, #0f0f23, #1a1a2e, #16213e);
             color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             min-height: 100vh;
-            overflow-x: hidden;
+            position: relative;
         }
-        
+
         .stars {
             position: fixed;
             top: 0;
@@ -26,1005 +25,182 @@
             width: 100%;
             height: 100%;
             pointer-events: none;
-            z-index: 1;
         }
-        
+
         .star {
             position: absolute;
             background: white;
             border-radius: 50%;
             animation: twinkle 2s infinite alternate;
         }
-        
+
         @keyframes twinkle {
             0% { opacity: 0.3; transform: scale(0.8); }
             100% { opacity: 1; transform: scale(1.2); }
         }
-        
-        .game-container {
-            position: relative;
-            z-index: 2;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .space-scene {
-            height: 200px;
-            position: relative;
-            background: linear-gradient(to bottom, #1a1a2e 0%, #2d1b69 100%);
-            overflow: hidden;
-            margin-bottom: 20px;
-            border-bottom: 3px solid #ffd700;
-        }
-        
-        .earth {
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(45deg, #4CAF50, #2196F3);
-            border-radius: 50%;
-            position: absolute;
-            left: 50px;
-            top: 50%;
-            transform: translateY(-50%);
-            box-shadow: 0 0 30px rgba(76, 175, 80, 0.5);
-            animation: rotate 20s linear infinite;
-        }
-        
-        .moon {
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(45deg, #e0e0e0, #bdbdbd);
-            border-radius: 50%;
-            position: absolute;
-            right: 50px;
-            top: 50%;
-            transform: translateY(-50%);
-            box-shadow: 0 0 20px rgba(224, 224, 224, 0.3);
-            animation: moonGlow 3s ease-in-out infinite alternate;
-        }
-        
-        .spaceship {
-            width: 40px;
-            height: 40px;
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            transition: left 2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            font-size: 2em;
-            animation: float 2s ease-in-out infinite;
-            filter: drop-shadow(0 0 10px #ffd700);
-        }
-        
-        .spaceship.boosting {
-            animation: boost 2s ease-out;
-            filter: drop-shadow(0 0 20px #ffd700) drop-shadow(0 0 30px #ff6b6b);
-        }
-        
-        .rocket-trail {
-            position: absolute;
-            width: 3px;
-            height: 3px;
-            background: #ffd700;
-            border-radius: 50%;
-            pointer-events: none;
-            animation: trail 1s linear forwards;
-        }
-        
-        @keyframes rotate {
-            from { transform: translateY(-50%) rotate(0deg); }
-            to { transform: translateY(-50%) rotate(360deg); }
-        }
-        
-        @keyframes moonLanding {
-            0% { transform: translateY(-50%) scale(1) rotate(0deg); }
-            25% { transform: translateY(-50%) scale(1.5) rotate(10deg); }
-            50% { transform: translateY(-50%) scale(2) rotate(-10deg); }
-            75% { transform: translateY(-50%) scale(1.5) rotate(5deg); }
-            100% { transform: translateY(-50%) scale(1.8) rotate(0deg); }
-        }
-        
-        .moon-celebration {
-            animation: moonCelebration 3s ease-in-out infinite;
-        }
-        
-        @keyframes moonCelebration {
-            0%, 100% { transform: translateY(-50%) scale(1); box-shadow: 0 0 20px rgba(224, 224, 224, 0.3); }
-            50% { transform: translateY(-50%) scale(1.3); box-shadow: 0 0 60px rgba(255, 215, 0, 1), 0 0 100px rgba(255, 255, 255, 0.8); }
-        }
-        
-        .rainbow-stars {
-            position: absolute;
-            font-size: 2em;
-            animation: rainbowFall 4s linear forwards;
-            pointer-events: none;
-            z-index: 1001;
-        }
-        
-        @keyframes rainbowFall {
-            0% {
-                opacity: 1;
-                transform: translateY(-100px) rotate(0deg) scale(1);
-                color: #ff0000;
-            }
-            25% {
-                color: #ff8800;
-            }
-            50% {
-                color: #00ff00;
-            }
-            75% {
-                color: #0088ff;
-            }
-            100% {
-                opacity: 0;
-                transform: translateY(100vh) rotate(1080deg) scale(2);
-                color: #ff00ff;
-            }
-        }
-        
-        .victory-message {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 3em;
-            color: #ffd700;
-            text-shadow: 3px 3px 6px rgba(0,0,0,0.8);
-            animation: victoryPulse 2s ease-in-out infinite;
-            z-index: 1002;
-            pointer-events: none;
-        }
-        
-        @keyframes victoryPulse {
-            0%, 100% { transform: translate(-50%, -50%) scale(1); }
-            50% { transform: translate(-50%, -50%) scale(1.2); }
-        }
-        
-        @keyframes float {
-            0%, 100% { transform: translateY(-50%) rotate(-2deg); }
-            50% { transform: translateY(-60%) rotate(2deg); }
-        }
-        
-        @keyframes boost {
-            0% { transform: translateY(-50%) scale(1); }
-            20% { transform: translateY(-50%) scale(1.5); }
-            40% { transform: translateY(-50%) scale(1.2); }
-            100% { transform: translateY(-50%) scale(1); }
-        }
-        
-        @keyframes trail {
-            0% { opacity: 1; transform: scale(1); }
-            100% { opacity: 0; transform: scale(0) translateX(-30px) translateY(10px); }
-        }
-        
-        @keyframes simpleTrail {
-            0% { opacity: 1; transform: scale(1) translateY(0px); }
-            100% { opacity: 0; transform: scale(0.5) translateY(20px) translateX(-15px); }
-        }
-        
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #ffd700, #ff6b6b, #4ecdc4);
-            border-radius: 8px;
-            width: 0%;
-            transition: width 2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            animation: progressGlow 2s ease infinite;
-        }
-        
-        .game-content {
-            flex: 1;
-            padding: 20px;
+
+        .container {
             text-align: center;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 30px;
+            backdrop-filter: blur(15px);
+            border: 3px solid rgba(255,215,0,0.3);
+            max-width: 600px;
+            position: relative;
+            z-index: 10;
+            animation: containerGlow 4s ease-in-out infinite;
         }
-        
-        .game-title {
-            font-size: 2.5em;
-            color: #ffd700;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-            animation: titlePulse 3s ease-in-out infinite;
-        }
-        
-        @keyframes titlePulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-        
-        .game-subtitle {
-            font-size: 1.2em;
-            color: #87ceeb;
-            margin-bottom: 30px;
-            animation: subtitleFloat 4s ease-in-out infinite;
-        }
-        
-        @keyframes subtitleFloat {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-5px); }
-        }
-        
-        .challenge-container {
-            background: rgba(255,255,255,0.1);
-            border-radius: 20px;
-            padding: 30px;
-            max-width: 800px;
-            margin: 0 auto;
-            backdrop-filter: blur(10px);
-            border: 2px solid rgba(255,215,0,0.3);
-            animation: containerPulse 6s ease-in-out infinite;
-        }
-        
-        @keyframes containerPulse {
+
+        @keyframes containerGlow {
             0%, 100% { border-color: rgba(255,215,0,0.3); }
             50% { border-color: rgba(255,215,0,0.8); }
         }
-        
-        .challenge-title {
-            font-size: 1.8em;
+
+        h1 {
             color: #ffd700;
+            font-size: clamp(1.8em, 4vw, 2.5em);
             margin-bottom: 20px;
-            animation: bounce 2s ease-in-out infinite;
+            text-shadow: 3px 3px 8px rgba(0,0,0,0.7);
+            animation: titleGlow 3s ease-in-out infinite;
         }
-        
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
+
+        @keyframes titleGlow {
+            0%, 100% { text-shadow: 3px 3px 8px rgba(0,0,0,0.7); }
+            50% { text-shadow: 3px 3px 20px rgba(255,215,0,0.8); }
         }
-        
-        .question {
-            font-size: 1.5em;
-            margin-bottom: 25px;
+
+        .subtitle {
+            color: #87ceeb;
+            font-size: clamp(1em, 2.5vw, 1.2em);
+            margin-bottom: 30px;
             line-height: 1.4;
         }
-        
-        .options {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-        
-        .option {
+
+        .game-link {
+            display: inline-block;
             background: linear-gradient(45deg, #4CAF50, #45a049);
             color: white;
-            border: none;
-            padding: 15px 20px;
-            border-radius: 15px;
-            font-size: 1.2em;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border: 2px solid transparent;
+            text-decoration: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: clamp(1em, 2vw, 1.2em);
+            margin: 10px;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            border: 3px solid transparent;
             position: relative;
             overflow: hidden;
+            font-weight: bold;
         }
-        
-        .option::before {
+
+        .game-link::before {
             content: '';
             position: absolute;
             top: 50%;
             left: 50%;
             width: 0;
             height: 0;
-            background: rgba(255,255,255,0.3);
+            background: rgba(255,255,255,0.2);
             border-radius: 50%;
-            transition: all 0.5s ease;
+            transition: all 0.6s ease;
             transform: translate(-50%, -50%);
         }
-        
-        .option:hover::before {
-            width: 300px;
-            height: 300px;
+
+        .game-link:hover::before {
+            width: 400px;
+            height: 400px;
         }
-        
-        .option:hover {
-            background: linear-gradient(45deg, #45a049, #4CAF50);
-            transform: scale(1.1) rotate(-1deg);
-            border: 2px solid #ffd700;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+
+        .game-link:hover {
+            transform: translateY(-5px) scale(1.05);
+            border-color: #ffd700;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
         }
-        
-        .option.correct {
+
+        .game-link.new {
             background: linear-gradient(45deg, #ffd700, #ffed4a);
             color: #1a1a2e;
-            animation: correctCelebration 1s ease;
-            border: 2px solid #fff;
+            animation: newGamePulse 2s ease-in-out infinite;
         }
-        
-        .option.wrong {
-            background: linear-gradient(45deg, #f44336, #d32f2f);
-            animation: wrongShake 0.6s ease;
-        }
-        
-        /* Nuevos estilos para juego de clasificación */
-        .sorting-game {
-            display: flex;
-            justify-content: space-around;
-            gap: 30px;
-            margin: 30px 0;
-            flex-wrap: wrap;
-        }
-        
-        .sort-category {
-            flex: 1;
-            min-width: 250px;
-            background: rgba(255,255,255,0.1);
-            border: 3px dashed #ffd700;
-            border-radius: 20px;
-            padding: 20px;
-            text-align: center;
-            min-height: 200px;
-        }
-        
-        .sort-category.drop-ready {
-            border-style: solid;
-            background: rgba(255,215,0,0.2);
-            transform: scale(1.05);
-        }
-        
-        .sort-category h3 {
-            color: #ffd700;
-            font-size: 1.3em;
-            margin-bottom: 15px;
-            border-bottom: 2px solid #ffd700;
-            padding-bottom: 10px;
-        }
-        
-        .sort-items {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 15px;
-            margin: 30px 0;
-        }
-        
-        .sort-item {
-            background: linear-gradient(45deg, #FF9800, #FF5722);
-            color: white;
-            padding: 12px 20px;
-            border-radius: 20px;
-            cursor: grab;
-            transition: all 0.3s ease;
-            border: 2px solid transparent;
-            user-select: none;
-        }
-        
-        .sort-item:hover {
-            transform: scale(1.1) rotate(3deg);
-            border-color: #ffd700;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-        }
-        
-        .sort-item.dragging {
-            opacity: 0.7;
-            cursor: grabbing;
-            transform: scale(1.15) rotate(10deg);
-        }
-        
-        .sort-item.placed {
-            cursor: default;
-            opacity: 0.8;
-            transform: none;
-        }
-        
-        .sort-item.correct {
-            background: linear-gradient(45deg, #4CAF50, #45a049);
-            animation: correctPlacement 1s ease;
-        }
-        
-        .sort-item.wrong {
-            background: linear-gradient(45deg, #f44336, #d32f2f);
-            animation: wrongPlacement 0.6s ease;
-        }
-        
-        /* Estilos para juego de secuencias */
-        .sequence-game {
-            margin: 30px 0;
-        }
-        
-        .sequence-slots {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin: 30px 0;
-            flex-wrap: wrap;
-        }
-        
-        .sequence-slot {
-            width: 150px;
-            height: 100px;
-            border: 3px dashed #ffd700;
-            border-radius: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: rgba(255,215,0,0.1);
-            transition: all 0.3s ease;
-            position: relative;
-        }
-        
-        .sequence-slot::before {
-            content: attr(data-order);
-            position: absolute;
-            top: -15px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #ffd700;
-            color: #1a1a2e;
-            border-radius: 50%;
-            width: 30px;
-            height: 30px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 1.1em;
-        }
-        
-        .sequence-slot.drop-ready {
-            border-style: solid;
-            background: rgba(255,215,0,0.3);
-            transform: scale(1.05);
-        }
-        
-        .sequence-items {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 15px;
-            margin: 30px 0;
-        }
-        
-        .sequence-item {
-            background: linear-gradient(45deg, #9C27B0, #7B1FA2);
-            color: white;
-            padding: 15px 20px;
-            border-radius: 15px;
-            cursor: grab;
-            transition: all 0.3s ease;
-            border: 2px solid transparent;
-            user-select: none;
-            text-align: center;
-            min-width: 120px;
-        }
-        
-        .sequence-item:hover {
-            transform: scale(1.1) rotate(-2deg);
-            border-color: #ffd700;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-        }
-        
-        .sequence-item.dragging {
-            opacity: 0.7;
-            cursor: grabbing;
-            transform: scale(1.2) rotate(8deg);
-        }
-        
-        .sequence-item.placed {
-            cursor: default;
-            opacity: 0.9;
-            transform: none;
-        }
-        
-        @keyframes correctPlacement {
+
+        @keyframes newGamePulse {
             0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.2); }
+            50% { transform: scale(1.05); }
         }
-        
-        @keyframes wrongPlacement {
-            0%, 100% { transform: translateX(0) scale(1); }
-            25% { transform: translateX(-8px) scale(1.05); }
-            75% { transform: translateX(8px) scale(0.95); }
+
+        .game-link.wrapper {
+            background: linear-gradient(45deg, #9C27B0, #7B1FA2);
         }
-        
-        .connection-column {
-            flex: 1;
-            min-width: 200px;
-        }
-        
-        .connection-item {
+
+        .game-link.home {
             background: linear-gradient(45deg, #2196F3, #1976D2);
-            color: white;
-            padding: 15px;
-            margin: 10px 0;
-            border-radius: 15px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border: 3px solid transparent;
-            position: relative;
         }
-        
-        .connection-item:hover {
-            transform: scale(1.05);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-        }
-        
-        .connection-item.selected {
-            border-color: #ffd700;
-            background: linear-gradient(45deg, #ffd700, #ffed4a);
-            color: #1a1a2e;
-            animation: selectedPulse 1s ease infinite;
-        }
-        
-        .connection-item.matched {
-            background: linear-gradient(45deg, #4CAF50, #45a049);
-            border-color: #fff;
-            animation: matchSuccess 1s ease;
-        }
-        
-        @keyframes selectedPulse {
-            0%, 100% { transform: scale(1.05); }
-            50% { transform: scale(1.1); }
-        }
-        
-        @keyframes matchSuccess {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.2); }
-        }
-        
-        /* Estilos para juego de memoria */
-        .memory-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 15px;
-            max-width: 400px;
-            margin: 30px auto;
-        }
-        
-        .memory-card {
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(45deg, #9C27B0, #7B1FA2);
-            border-radius: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2em;
-            cursor: pointer;
-            transition: all 0.6s ease;
-            position: relative;
-            transform-style: preserve-3d;
-        }
-        
-        .memory-card.flipped {
-            transform: rotateY(180deg);
-        }
-        
-        .memory-card.matched {
-            background: linear-gradient(45deg, #4CAF50, #45a049);
-            animation: cardMatch 1s ease;
-        }
-        
-        .card-back, .card-front {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 15px;
-            backface-visibility: hidden;
-        }
-        
-        .card-front {
-            background: linear-gradient(45deg, #ffd700, #ffed4a);
-            color: #1a1a2e;
-            transform: rotateY(180deg);
-        }
-        
-        .card-back {
-            background: linear-gradient(45deg, #9C27B0, #7B1FA2);
-            color: white;
-        }
-        
-        @keyframes cardMatch {
-            0%, 100% { transform: rotateY(180deg) scale(1); }
-            50% { transform: rotateY(180deg) scale(1.2); }
-        }
-        
-        /* Efectos mejorados */
-        @keyframes correctCelebration {
-            0% { transform: scale(1) rotate(0deg); }
-            25% { transform: scale(1.3) rotate(-10deg); }
-            50% { transform: scale(1.4) rotate(5deg); }
-            75% { transform: scale(1.3) rotate(-5deg); }
-            100% { transform: scale(1.2) rotate(0deg); }
-        }
-        
-        @keyframes wrongShake {
-            0%, 100% { transform: translateX(0) scale(1); }
-            10% { transform: translateX(-10px) scale(1.05); }
-            20% { transform: translateX(10px) scale(0.95); }
-            30% { transform: translateX(-8px) scale(1.05); }
-            40% { transform: translateX(8px) scale(0.95); }
-            50% { transform: translateX(-5px) scale(1); }
-        }
-        
-        .drag-area {
-            min-height: 120px;
-            border: 3px dashed #ffd700;
-            border-radius: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+
+        .description {
+            font-size: 0.9em;
+            color: #b0b0b0;
             margin: 20px 0;
-            background: rgba(255,215,0,0.1);
-            transition: all 0.3s ease;
-            animation: dragAreaPulse 3s ease-in-out infinite;
+            line-height: 1.4;
         }
-        
-        @keyframes dragAreaPulse {
-            0%, 100% { border-color: #ffd700; background: rgba(255,215,0,0.1); }
-            50% { border-color: #ffed4a; background: rgba(255,215,0,0.2); }
-        }
-        
-        .drag-area.drag-over {
-            background: rgba(255,215,0,0.4);
-            border-style: solid;
-            transform: scale(1.05);
-            box-shadow: 0 0 30px rgba(255,215,0,0.5);
-        }
-        
-        .draggable {
-            background: linear-gradient(45deg, #2196F3, #1976D2);
-            color: white;
-            padding: 10px 20px;
-            border-radius: 25px;
-            margin: 10px;
-            cursor: grab;
-            display: inline-block;
-            transition: all 0.3s ease;
-            user-select: none;
-            border: 2px solid transparent;
-        }
-        
-        .draggable:hover {
-            transform: scale(1.15) rotate(5deg);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
-            border-color: #ffd700;
-        }
-        
-        .draggable.dragging {
-            opacity: 0.7;
-            cursor: grabbing;
-            transform: scale(1.2) rotate(10deg);
-        }
-        
-        .input-answer {
-            background: rgba(255,255,255,0.2);
-            border: 2px solid #ffd700;
-            border-radius: 10px;
-            padding: 15px;
-            font-size: 1.3em;
-            color: white;
-            text-align: center;
-            width: 300px;
-            margin: 20px auto;
-            transition: all 0.3s ease;
-        }
-        
-        .input-answer:focus {
-            outline: none;
-            border-color: #ffed4a;
-            box-shadow: 0 0 20px rgba(255,215,0,0.3);
-            transform: scale(1.05);
-        }
-        
-        .input-answer::placeholder {
-            color: rgba(255,255,255,0.7);
-        }
-        
-        .submit-btn, .next-btn {
+
+        .new-badge {
             background: linear-gradient(45deg, #ff6b6b, #ff5252);
             color: white;
-            border: none;
-            padding: 15px 30px;
-            border-radius: 25px;
-            font-size: 1.3em;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-top: 20px;
-            border: 2px solid transparent;
-        }
-        
-        .submit-btn:hover, .next-btn:hover {
-            background: linear-gradient(45deg, #ff5252, #ff6b6b);
-            transform: scale(1.1) rotate(-2deg);
-            border-color: #ffd700;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-        }
-        
-        .next-btn {
-            background: linear-gradient(45deg, #ffd700, #ffed4a);
-            color: #1a1a2e;
-            font-weight: bold;
-        }
-        
-        .next-btn:hover {
-            background: linear-gradient(45deg, #ffed4a, #ffd700);
-        }
-        
-        .score-display {
-            font-size: 1.5em;
-            color: #87ceeb;
-            margin-bottom: 20px;
-            animation: scoreGlow 2s ease-in-out infinite;
-        }
-        
-        @keyframes scoreGlow {
-            0%, 100% { text-shadow: 0 0 10px rgba(135, 206, 235, 0.5); }
-            50% { text-shadow: 0 0 20px rgba(135, 206, 235, 1); }
-        }
-        
-        .celebration-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: transparent;
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            pointer-events: none;
-        }
-        
-        .celebration-content {
-            background: linear-gradient(45deg, #ffd700, #ff6b6b, #4ecdc4);
-            padding: 50px;
-            border-radius: 30px;
-            text-align: center;
-            color: #1a1a2e;
-            font-size: 2em;
-            animation: celebrationBounce 1s ease;
-            border: 5px solid white;
-            box-shadow: 0 0 50px rgba(255,215,0,0.8);
-        }
-        
-        @keyframes celebrationBounce {
-            0% { transform: scale(0) rotate(0deg); }
-            50% { transform: scale(1.2) rotate(180deg); }
-            100% { transform: scale(1) rotate(360deg); }
-        }
-        
-        .star-confetti {
+            font-size: 0.8em;
+            padding: 4px 12px;
+            border-radius: 15px;
             position: absolute;
-            font-size: 1.5em;
-            animation: starFall 3s linear forwards;
-            pointer-events: none;
-            z-index: 1001;
+            top: -10px;
+            right: -10px;
+            animation: badgeBounce 2s ease-in-out infinite;
         }
-        
-        @keyframes starFall {
-            0% {
-                opacity: 1;
-                transform: translateY(-100px) rotate(0deg) scale(1);
+
+        @keyframes badgeBounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-3px); }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 20px;
+                padding: 30px 20px;
             }
-            100% {
-                opacity: 0;
-                transform: translateY(100vh) rotate(720deg) scale(0.5);
+
+            .game-link {
+                display: block;
+                margin: 15px auto;
+                max-width: 280px;
             }
-        }
-        
-        .star-explosion {
-            position: absolute;
-            width: 4px;
-            height: 4px;
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 1001;
-        }
-        
-        @keyframes starExplode {
-            0% {
-                opacity: 1;
-                transform: scale(1);
-            }
-            100% {
-                opacity: 0;
-                transform: scale(2) translateX(var(--dx)) translateY(var(--dy));
-            }
-        }
-        
-        .final-message {
-            text-align: center;
-            padding: 40px;
-            animation: finalMessageGlow 3s ease-in-out infinite;
-        }
-        
-        @keyframes finalMessageGlow {
-            0%, 100% { filter: drop-shadow(0 0 10px rgba(255,215,0,0.3)); }
-            50% { filter: drop-shadow(0 0 30px rgba(255,215,0,0.8)); }
-        }
-        
-        .restart-btn {
-            background: linear-gradient(45deg, #4CAF50, #45a049);
-            color: white;
-            border: none;
-            padding: 20px 40px;
-            border-radius: 25px;
-            font-size: 1.4em;
-            cursor: pointer;
-            margin-top: 30px;
-            transition: all 0.3s ease;
-            border: 3px solid transparent;
-        }
-        
-        .restart-btn:hover {
-            background: linear-gradient(45deg, #45a049, #4CAF50);
-            transform: scale(1.1) rotate(-3deg);
-            border-color: #ffd700;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
         }
     </style>
 </head>
 <body>
+    <!-- Estrellas de fondo -->
     <div class="stars" id="stars"></div>
-    
-    <div class="game-container">
-        <div class="space-scene">
-            <div class="earth">🌍</div>
-            <div class="moon">🌙</div>
-            <div class="spaceship" id="spaceship">🚀</div>
-            
-            <!-- Progress bar horizontal visible y simple -->
-            <div style="
-                position: absolute;
-                top: 20px;
-                left: 100px;
-                width: calc(100% - 200px);
-                height: 25px;
-                background: rgba(255,255,255,0.2);
-                border: 3px solid #ffd700;
-                border-radius: 15px;
-                box-shadow: 0 0 20px rgba(255,215,0,0.5);
-            ">
-                <div id="progressFill" style="
-                    height: 100%;
-                    width: 0%;
-                    background: linear-gradient(90deg, #ffd700, #ff6b6b, #4ecdc4);
-                    border-radius: 12px;
-                    transition: width 2s ease;
-                    box-shadow: 0 0 15px rgba(255,215,0,0.8);
-                "></div>
-                
-                <!-- Estaciones marcadoras -->
-                <div id="progressStations" style="
-                    position: absolute;
-                    top: -10px;
-                    left: 0;
-                    width: 100%;
-                    height: 20px;
-                ">
-                    <!-- Se llenan con JavaScript -->
-                </div>
-            </div>
+
+    <div class="container">
+        <h1>🚀 Aventura Espacial con Carl Sagan 🌟</h1>
+        <p class="subtitle">¡Elige tu experiencia de juego preferida!</p>
+
+        <div style="position: relative; display: inline-block;">
+            <a href="game_new.html" class="game-link new">🌟 NUEVO: Juego Mejorado</a>
+            <span class="new-badge">¡NUEVO!</span>
         </div>
-        
-        <div class="game-content">
-            <h1 class="game-title">🚀 Aventura Espacial con Carl Sagan 🚀</h1>
-            <p class="game-subtitle">¡Ayuda a la nave espacial a llegar a la Luna respondiendo correctamente!</p>
-            
-            <div class="score-display" id="scoreDisplay">Pregunta 1 de 12 | Puntuación: 0</div>
-            
-            <div class="challenge-container" id="challengeContainer">
-                <!-- El contenido del reto se genera dinámicamente -->
-            </div>
-            
-            <button class="next-btn" id="nextBtn" onclick="nextChallenge()" style="display: none;">
-                ¡Siguiente Aventura! 🌟
-            </button>
-        </div>
+
+        <p class="description">Diseño completamente rediseñado, más intuitivo y sin problemas de visualización</p>
+
+        <a href="juego_wrapper.html" class="game-link wrapper">🎮 Juego con Navegación</a>
+        <a href="juego_carl.html" class="game-link">🚀 Juego Clásico</a>
+
+        <br><br>
+        <a href="../../index.html" class="game-link home">🏠 Volver al Inicio</a>
     </div>
-    
-    <div class="celebration-overlay" id="celebrationOverlay">
-        <div class="celebration-content" id="celebrationContent">
-            ¡Excelente! 🎉
-        </div>
-    </div>
-    
+
     <script>
-        let currentChallenge = 0;
-        let score = 0;
-        let spaceshipPosition = 0;
-        let selectedConnections = [];
-        let memoryCards = [];
-        let flippedCards = [];
-        let matchedPairs = 0;
-        
-        const challenges = [
-            {
-                type: 'multiple_choice',
-                title: 'Reto 1: ¿Qué le gustaba estudiar a Carl?',
-                question: '¿Qué le gustaba más estudiar a Carl Sagan?',
-                options: ['Las estrellas y planetas 🌟', 'Solo los peces 🐠', 'Solo los carros 🚗', 'Solo la comida 🍕'],
-                correct: 0
-            },
-            {
-                type: 'drag_drop',
-                title: 'Reto 2: Herramientas de Carl',
-                question: 'Arrastra lo que Carl usaba para ver las estrellas:',
-                items: ['🔭 Telescopio', '🍌 Banana', '🎾 Pelota', '📚 Libro'],
-                correct: '🔭 Telescopio',
-                dropText: 'Arrastra aquí la herramienta correcta'
-            },
-            {
-                type: 'multiple_choice',
-                title: 'Reto 3: ¿Qué estudiaba Carl?',
-                question: '¿Cuál de estas cosas NO estudiaba Carl Sagan?',
-                options: ['🌟 Las estrellas brillantes', '🍕 Recetas de pizza', '🪐 Los planetas lejanos', '🌙 La Luna hermosa'],
-                correct: 1
-            },
-            {
-                type: 'connections',
-                title: 'Reto 4: Conecta las ideas de Carl',
-                question: 'Conecta cada cosa con lo que Carl nos enseñó:',
-                leftItems: ['🌟 Estrellas', '❓ Preguntas', '🌍 Tierra'],
-                rightItems: ['Nuestro hogar que cuidar', 'Siempre debemos hacerlas', 'Están hechas del mismo material que nosotros'],
-                correctPairs: [[0,2], [1,1], [2,0]]
-            },
-            {
-                type: 'input',
-                title: 'Reto 5: Completa la frase',
-                question: 'Carl decía: "Somos polvo de ______"',
-                answer: 'estrellas',
-                hint: 'Pista: ✨ Brillan en el cielo nocturno'
-            },
-            {
-                type: 'multiple_choice',
-                title: 'Reto 6: La vida de Carl',
-                question: '¿Qué hizo primero Carl Sagan en su vida?',
-                options: ['📺 Hacer programas de TV', '👶 Nacer y ser niño curioso', '🔭 Usar telescopios grandes', '🎓 Estudiar en la universidad'],
-                correct: 1
-            },
-            {
-                type: 'multiple_choice',
-                title: 'Reto 7: El planeta de Carl',
-                question: '¿En qué planeta vivía Carl Sagan?',
-                options: ['La Tierra 🌍', 'Marte 🔴', 'La Luna 🌙', 'El Sol ☀️'],
-                correct: 0
-            },
-            {
-                type: 'memory',
-                title: 'Reto 8: Memoria Espacial',
-                question: 'Encuentra todas las parejas de cosas que le gustaban a Carl:',
-                cards: ['🌟', '🌟', '🔭', '🔭', '📚', '📚', '🌍', '🌍']
-            },
-            {
-                type: 'drag_drop',
-                title: 'Reto 9: Mensaje de Carl',
-                question: 'Arrastra lo que Carl nos enseñó a hacer:',
-                items: ['🤔 Hacer preguntas', '😴 Solo dormir', '📺 Solo ver TV', '🍭 Comer dulces'],
-                correct: '🤔 Hacer preguntas',
-                dropText: 'Arrastra la enseñanza de Carl'
-            },
-            {
-                type: 'multiple_choice',
-                title: 'Reto 10: Los programas de Carl',
-                question: '¿Cómo compartía Carl su amor por las estrellas?',
-                options: ['En TV y libros 📺📚', 'Solo cantando 🎵', 'Solo bailando 💃', 'Solo durmiendo 😴'],
-                correct: 0
-            },
-            {
-                type: 'input',
-                title: 'Reto 11: El trabajo de Carl',
-                question: 'Carl era un cien______',
-                answer: 'cientifico',
-                hint: 'Pista: 🔬 Persona que estudia y descubre cosas'
-            },
-            {
-                type: 'connections',
-                title: 'Reto 12: Las cualidades de Carl',
-                question: 'Conecta cada cualidad con su significado:',
-                leftItems: ['🤔 Curioso', '🌟 Explorador', '💚 Cuidadoso'],
-                rightItems: ['Protegía nuestro planeta', 'Siempre hacía preguntas', 'Descubría cosas nuevas'],
-                correctPairs: [[0,1], [1,2], [2,0]]
-            }
-        ];
-        
+        // Crear estrellas de fondo
         function createStars() {
             const starsContainer = document.getElementById('stars');
-            for (let i = 0; i < 150; i++) {
+            for (let i = 0; i < 80; i++) {
                 const star = document.createElement('div');
                 star.className = 'star';
                 star.style.left = Math.random() * 100 + '%';
@@ -1034,821 +210,8 @@
                 starsContainer.appendChild(star);
             }
         }
-        
-        function createRouteStations() {
-            const stationsContainer = document.getElementById('routeStations');
-            if (!stationsContainer) {
-                console.error('Stations container not found!');
-                return;
-            }
-            
-            const totalStations = challenges.length;
-            console.log('Creating', totalStations, 'stations'); // Debug
-            
-            // Coordenadas de la ruta curva (porcentajes relativos al contenedor)
-            const routePoints = [
-                { x: 15, y: 75 },  // Cerca de la Tierra
-                { x: 20, y: 65 },
-                { x: 25, y: 55 },
-                { x: 32, y: 58 },
-                { x: 40, y: 60 },
-                { x: 48, y: 58 },
-                { x: 56, y: 55 },
-                { x: 64, y: 52 },
-                { x: 72, y: 48 },
-                { x: 78, y: 42 },
-                { x: 82, y: 38 },
-                { x: 85, y: 35 }   // Cerca de la Luna
-            ];
-            
-            // Limpiar estaciones existentes
-            stationsContainer.innerHTML = '';
-            
-            for (let i = 0; i < totalStations; i++) {
-                const station = document.createElement('div');
-                station.className = 'route-station';
-                station.id = `station-${i}`;
-                station.textContent = i + 1;
-                
-                const point = routePoints[i];
-                station.style.left = point.x + '%';
-                station.style.top = point.y + '%';
-                
-                console.log('Created station', i+1, 'at', point); // Debug
-                
-                stationsContainer.appendChild(station);
-            }
-            
-            console.log('Stations created:', stationsContainer.children.length); // Debug
-            
-            // Marcar la primera estación como actual
-            updateStationStatus();
-        }
-        
-        function updateStationStatus() {
-            const stations = document.querySelectorAll('.route-station');
-            
-            if (stations.length === 0) {
-                console.warn('No stations found! Attempting to recreate...');
-                setTimeout(() => {
-                    createRouteStations();
-                }, 500);
-                return;
-            }
-            
-            console.log(`Updating ${stations.length} stations for challenge ${currentChallenge}`);
-            
-            stations.forEach((station, index) => {
-                station.classList.remove('completed', 'current');
-                
-                if (index < currentChallenge) {
-                    station.classList.add('completed');
-                    console.log(`Station ${index + 1}: completed`);
-                } else if (index === currentChallenge) {
-                    station.classList.add('current');
-                    console.log(`Station ${index + 1}: current`);
-                } else {
-                    console.log(`Station ${index + 1}: pending`);
-                }
-            });
-            
-            const completed = document.querySelectorAll('.route-station.completed').length;
-            const current = document.querySelectorAll('.route-station.current').length;
-            console.log(`Status: ${completed} completed, ${current} current`);
-        }
-        
-        function createRocketTrail() {
-            const spaceship = document.getElementById('spaceship');
-            const spaceScene = document.querySelector('.space-scene');
-            const rect = spaceScene.getBoundingClientRect();
-            const shipRect = spaceship.getBoundingClientRect();
-            
-            for (let i = 0; i < 8; i++) {
-                setTimeout(() => {
-                    const trail = document.createElement('div');
-                    trail.className = 'rocket-trail';
-                    trail.style.left = (shipRect.left - rect.left - 10 + Math.random() * 20) + 'px';
-                    trail.style.top = (shipRect.top - rect.top + 20 + Math.random() * 20) + 'px';
-                    trail.style.background = ['#ffd700', '#ff6b6b', '#4ecdc4', '#45b7d1'][Math.floor(Math.random() * 4)];
-                    spaceScene.appendChild(trail);
-                    
-                    setTimeout(() => trail.remove(), 1000);
-                }, i * 50);
-            }
-        }
-        
-        function updateSpaceshipPosition() {
-            const spaceship = document.getElementById('spaceship');
-            
-            // Coordenadas de la ruta (deben coincidir con createRouteStations)
-            const routePoints = [
-                { x: 15, y: 75 },  // Posición inicial (Tierra)
-                { x: 20, y: 65 },
-                { x: 25, y: 55 },
-                { x: 32, y: 58 },
-                { x: 40, y: 60 },
-                { x: 48, y: 58 },
-                { x: 56, y: 55 },
-                { x: 64, y: 52 },
-                { x: 72, y: 48 },
-                { x: 78, y: 42 },
-                { x: 82, y: 38 },
-                { x: 85, y: 35 }   // Posición final (Luna)
-            ];
-            
-            // Asegurarse de que currentChallenge esté en rango
-            const challengeIndex = Math.min(Math.max(currentChallenge, 0), routePoints.length - 1);
-            const targetPoint = routePoints[challengeIndex];
-            
-            console.log('Moving to challenge:', challengeIndex, 'Point:', targetPoint); // Debug
-            
-            spaceship.classList.add('boosting');
-            createRocketTrail();
-            
-            setTimeout(() => {
-                spaceship.style.left = targetPoint.x + '%';
-                spaceship.style.top = targetPoint.y + '%';
-                
-                // Actualizar estado de las estaciones
-                updateStationStatus();
-            }, 100);
-            
-            setTimeout(() => {
-                spaceship.classList.remove('boosting');
-            }, 2000);
-            
-            // Si llegó a la Luna (último desafío completado), animación especial
-            if (currentChallenge === challenges.length) {
-                setTimeout(() => {
-                    moonLandingCelebration();
-                }, 1000);
-            }
-        }
-        
-        function createStarConfetti() {
-            const colors = ['⭐', '🌟', '✨', '💫', '⚡', '💥'];
-            
-            for (let i = 0; i < 50; i++) {
-                setTimeout(() => {
-                    const star = document.createElement('div');
-                    star.className = 'star-confetti';
-                    star.textContent = colors[Math.floor(Math.random() * colors.length)];
-                    star.style.left = Math.random() * 100 + '%';
-                    star.style.animationDuration = (Math.random() * 2 + 2) + 's';
-                    star.style.animationDelay = Math.random() * 0.5 + 's';
-                    document.body.appendChild(star);
-                    
-                    setTimeout(() => star.remove(), 3500);
-                }, i * 50);
-            }
-        }
-        
-        function createRainbowStars() {
-            const rainbowStars = ['🌟', '⭐', '✨', '💫', '🌈', '🎆', '🎇', '💥', '⚡', '🔥'];
-            
-            for (let i = 0; i < 100; i++) {
-                setTimeout(() => {
-                    const star = document.createElement('div');
-                    star.className = 'rainbow-stars';
-                    star.textContent = rainbowStars[Math.floor(Math.random() * rainbowStars.length)];
-                    star.style.left = Math.random() * 100 + '%';
-                    star.style.animationDuration = (Math.random() * 2 + 3) + 's';
-                    star.style.animationDelay = Math.random() * 1 + 's';
-                    document.body.appendChild(star);
-                    
-                    setTimeout(() => star.remove(), 5000);
-                }, i * 30);
-            }
-        }
-        
-        function moonLandingCelebration() {
-            const spaceship = document.getElementById('spaceship');
-            const moon = document.querySelector('.moon');
-            
-            // Animación especial para la nave
-            spaceship.style.animation = 'moonLanding 2s ease-out forwards';
-            
-            // Animación especial para la Luna
-            moon.classList.add('moon-celebration');
-            
-            // Crear lluvia de estrellas arcoíris
-            createRainbowStars();
-            
-            // Mensaje de victoria
-            const victoryMsg = document.createElement('div');
-            victoryMsg.className = 'victory-message';
-            victoryMsg.innerHTML = '🚀 ¡LLEGAMOS A LA LUNA! 🌙<br>¡MISIÓN CUMPLIDA!';
-            document.body.appendChild(victoryMsg);
-            
-            // Explosiones múltiples
-            for (let i = 0; i < 5; i++) {
-                setTimeout(() => {
-                    createMegaExplosion();
-                }, i * 500);
-            }
-            
-            // Remover mensaje después de 4 segundos
-            setTimeout(() => {
-                if (victoryMsg.parentNode) {
-                    victoryMsg.remove();
-                }
-            }, 4000);
-        }
-        
-        function createMegaExplosion() {
-            const colors = ['#ffd700', '#ff6b6b', '#4ecdc4', '#45b7d1', '#9C27B0', '#4CAF50', '#FF5722', '#E91E63'];
-            const explosionSizes = [100, 150, 200, 250, 300];
-            
-            for (let size of explosionSizes) {
-                setTimeout(() => {
-                    for (let i = 0; i < 40; i++) {
-                        const particle = document.createElement('div');
-                        particle.className = 'star-explosion';
-                        particle.style.left = (window.innerWidth / 2) + 'px';
-                        particle.style.top = (window.innerHeight / 2) + 'px';
-                        particle.style.background = colors[Math.floor(Math.random() * colors.length)];
-                        particle.style.width = particle.style.height = Math.random() * 8 + 4 + 'px';
-                        
-                        const angle = (i / 40) * Math.PI * 2;
-                        const distance = size + Math.random() * 100;
-                        const dx = Math.cos(angle) * distance;
-                        const dy = Math.sin(angle) * distance;
-                        
-                        particle.style.setProperty('--dx', dx + 'px');
-                        particle.style.setProperty('--dy', dy + 'px');
-                        particle.style.animation = `starExplode ${1 + Math.random()}s ease-out forwards`;
-                        
-                        document.body.appendChild(particle);
-                        
-                        setTimeout(() => particle.remove(), 2000);
-                    }
-                }, size / 50);
-            }
-        }
-        
-        function showCelebration(message) {
-            const overlay = document.getElementById('celebrationOverlay');
-            const content = document.getElementById('celebrationContent');
-            content.innerHTML = message;
-            overlay.style.display = 'flex';
-            
-            createStarConfetti();
-            createStarExplosion();
-            
-            setTimeout(() => {
-                overlay.style.display = 'none';
-            }, 2500);
-        }
-        
-        function createStarExplosion() {
-            const centerX = window.innerWidth / 2;
-            const centerY = window.innerHeight / 2;
-            const colors = ['#ffd700', '#ff6b6b', '#4ecdc4', '#45b7d1', '#9C27B0', '#4CAF50'];
-            
-            for (let i = 0; i < 30; i++) {
-                const star = document.createElement('div');
-                star.className = 'star-explosion';
-                star.style.left = centerX + 'px';
-                star.style.top = centerY + 'px';
-                star.style.background = colors[Math.floor(Math.random() * colors.length)];
-                
-                const angle = (i / 30) * Math.PI * 2;
-                const distance = Math.random() * 200 + 100;
-                const dx = Math.cos(angle) * distance;
-                const dy = Math.sin(angle) * distance;
-                
-                star.style.setProperty('--dx', dx + 'px');
-                star.style.setProperty('--dy', dy + 'px');
-                star.style.animation = 'starExplode 1s ease-out forwards';
-                
-                document.body.appendChild(star);
-                
-                setTimeout(() => star.remove(), 1000);
-            }
-        }
-        
-        function loadChallenge() {
-            const container = document.getElementById('challengeContainer');
-            const challenge = challenges[currentChallenge];
-            const scoreDisplay = document.getElementById('scoreDisplay');
-            
-            scoreDisplay.textContent = `Pregunta ${currentChallenge + 1} de ${challenges.length} | Puntuación: ${score}`;
-            
-            let html = `<h2 class="challenge-title">${challenge.title}</h2>`;
-            
-            if (challenge.type === 'multiple_choice') {
-                html += `<div class="question">${challenge.question}</div>`;
-                html += '<div class="options">';
-                challenge.options.forEach((option, index) => {
-                    html += `<button class="option" onclick="checkMultipleChoice(${index})">${option}</button>`;
-                });
-                html += '</div>';
-            }
-            
-            else if (challenge.type === 'drag_drop') {
-                html += `<div class="question">${challenge.question}</div>`;
-                html += `<div class="drag-area" id="dropArea">${challenge.dropText}</div>`;
-                html += '<div>';
-                challenge.items.forEach((item, index) => {
-                    html += `<span class="draggable" draggable="true" ondragstart="dragStart(event)" data-item="${item}">${item}</span>`;
-                });
-                html += '</div>';
-            }
-            
-            else if (challenge.type === 'input') {
-                html += `<div class="question">${challenge.question}</div>`;
-                html += `<div style="margin: 20px 0; font-size: 1.2em; color: #87ceeb;">${challenge.hint}</div>`;
-                html += `<input type="text" class="input-answer" id="textInput" placeholder="Escribe tu respuesta...">`;
-                html += `<br><button class="submit-btn" onclick="checkInput()">Enviar Respuesta 🚀</button>`;
-            }
-            
-            else if (challenge.type === 'connections') {
-                html += `<div class="question">${challenge.question}</div>`;
-                html += '<div class="connection-game">';
-                html += '<div class="connection-column">';
-                challenge.leftItems.forEach((item, index) => {
-                    html += `<div class="connection-item" onclick="selectConnection(${index}, 'left')" data-index="${index}" data-side="left">${item}</div>`;
-                });
-                html += '</div>';
-                html += '<div class="connection-column">';
-                challenge.rightItems.forEach((item, index) => {
-                    html += `<div class="connection-item" onclick="selectConnection(${index}, 'right')" data-index="${index}" data-side="right">${item}</div>`;
-                });
-                html += '</div>';
-                html += '</div>';
-                html += `<div style="margin-top: 20px; color: #87ceeb;">Conectadas: <span id="connectionsCount">0/${challenge.correctPairs.length}</span></div>`;
-            }
-            
-            else if (challenge.type === 'memory') {
-                html += `<div class="question">${challenge.question}</div>`;
-                html += '<div class="memory-grid" id="memoryGrid"></div>';
-                html += `<div style="margin-top: 20px; color: #87ceeb;">Parejas encontradas: <span id="pairsCount">0/${challenge.cards.length/2}</span></div>`;
-            }
-            
-            // Ya no manejamos sorting ni sequence - simplificado
-            
-            container.innerHTML = html;
-            
-            if (challenge.type === 'drag_drop') {
-                setupDragDrop();
-            } else if (challenge.type === 'connections') {
-                selectedConnections = [];
-            } else if (challenge.type === 'memory') {
-                initMemoryGame();
-            }
-            // Removí sorting y sequence para simplificar
-        }
-        
-        function checkMultipleChoice(selectedIndex) {
-            const challenge = challenges[currentChallenge];
-            const buttons = document.querySelectorAll('.option');
-            
-            buttons.forEach(btn => btn.disabled = true);
-            
-            if (selectedIndex === challenge.correct) {
-                buttons[selectedIndex].classList.add('correct');
-                correctAnswer();
-            } else {
-                buttons[selectedIndex].classList.add('wrong');
-                buttons[challenge.correct].classList.add('correct');
-                wrongAnswer();
-            }
-        }
-        
-        function setupDragDrop() {
-            const dropArea = document.getElementById('dropArea');
-            if (!dropArea) return;
-            
-            dropArea.addEventListener('dragover', (e) => {
-                e.preventDefault();
-                dropArea.classList.add('drag-over');
-            });
-            
-            dropArea.addEventListener('dragleave', (e) => {
-                // Solo remover si realmente salimos del área
-                if (!dropArea.contains(e.relatedTarget)) {
-                    dropArea.classList.remove('drag-over');
-                }
-            });
-            
-            dropArea.addEventListener('drop', (e) => {
-                e.preventDefault();
-                dropArea.classList.remove('drag-over');
-                const draggedItem = e.dataTransfer.getData('text/plain');
-                if (draggedItem) {
-                    checkDragDrop(draggedItem);
-                }
-            });
-        }
-        
-        function dragStart(e) {
-            e.dataTransfer.setData('text/plain', e.target.dataset.item);
-            e.target.classList.add('dragging');
-            setTimeout(() => {
-                e.target.classList.remove('dragging');
-            }, 0);
-        }
-        
-        function checkDragDrop(draggedItem) {
-            const challenge = challenges[currentChallenge];
-            const dropArea = document.getElementById('dropArea');
-            
-            if (!dropArea || !challenge) return;
-            
-            if (draggedItem === challenge.correct) {
-                dropArea.innerHTML = `✅ ¡Correcto! ${draggedItem}`;
-                dropArea.style.background = 'rgba(76, 175, 80, 0.3)';
-                dropArea.style.borderColor = '#4CAF50';
-                dropArea.style.borderStyle = 'solid';
-                
-                // Deshabilitar todos los draggables
-                document.querySelectorAll('.draggable').forEach(item => {
-                    item.draggable = false;
-                    item.style.opacity = '0.5';
-                    item.style.cursor = 'default';
-                });
-                
-                correctAnswer();
-            } else {
-                dropArea.innerHTML = `❌ Intenta otra vez. ${draggedItem} no es correcto.`;
-                dropArea.style.background = 'rgba(244, 67, 54, 0.3)';
-                dropArea.style.borderColor = '#f44336';
-                dropArea.style.borderStyle = 'solid';
-                
-                setTimeout(() => {
-                    dropArea.innerHTML = challenge.dropText;
-                    dropArea.style.background = 'rgba(255,215,0,0.1)';
-                    dropArea.style.borderColor = '#ffd700';
-                    dropArea.style.borderStyle = 'dashed';
-                }, 2000);
-            }
-        }
-        
-        function selectConnection(index, side) {
-            const items = document.querySelectorAll('.connection-item');
-            const clickedItem = document.querySelector(`[data-index="${index}"][data-side="${side}"]`);
-            
-            if (clickedItem.classList.contains('matched')) return;
-            
-            if (selectedConnections.length === 0) {
-                selectedConnections.push({index, side, element: clickedItem});
-                clickedItem.classList.add('selected');
-            } else if (selectedConnections.length === 1) {
-                const first = selectedConnections[0];
-                if (first.side !== side) {
-                    selectedConnections.push({index, side, element: clickedItem});
-                    clickedItem.classList.add('selected');
-                    checkConnection();
-                } else {
-                    first.element.classList.remove('selected');
-                    selectedConnections = [{index, side, element: clickedItem}];
-                    clickedItem.classList.add('selected');
-                }
-            }
-        }
-        
-        function checkConnection() {
-            const challenge = challenges[currentChallenge];
-            const [first, second] = selectedConnections;
-            const correctPairs = challenge.correctPairs;
-            
-            let isCorrect = false;
-            for (let pair of correctPairs) {
-                if ((first.side === 'left' && second.side === 'right' && first.index === pair[0] && second.index === pair[1]) ||
-                    (first.side === 'right' && second.side === 'left' && first.index === pair[1] && second.index === pair[0])) {
-                    isCorrect = true;
-                    break;
-                }
-            }
-            
-            setTimeout(() => {
-                if (isCorrect) {
-                    first.element.classList.remove('selected');
-                    second.element.classList.remove('selected');
-                    first.element.classList.add('matched');
-                    second.element.classList.add('matched');
-                    
-                    const matched = document.querySelectorAll('.connection-item.matched').length;
-                    document.getElementById('connectionsCount').textContent = `${matched/2}/${correctPairs.length}`;
-                    
-                    if (matched === correctPairs.length * 2) {
-                        correctAnswer();
-                    }
-                } else {
-                    first.element.classList.remove('selected');
-                    second.element.classList.remove('selected');
-                }
-                selectedConnections = [];
-            }, 1000);
-        }
-        
-        function initMemoryGame() {
-            const challenge = challenges[currentChallenge];
-            const grid = document.getElementById('memoryGrid');
-            const shuffled = [...challenge.cards].sort(() => Math.random() - 0.5);
-            
-            memoryCards = [];
-            flippedCards = [];
-            matchedPairs = 0;
-            
-            shuffled.forEach((symbol, index) => {
-                const card = document.createElement('div');
-                card.className = 'memory-card';
-                card.dataset.symbol = symbol;
-                card.dataset.index = index;
-                card.innerHTML = `
-                    <div class="card-back">❓</div>
-                    <div class="card-front">${symbol}</div>
-                `;
-                card.addEventListener('click', flipCard);
-                grid.appendChild(card);
-                memoryCards.push(card);
-            });
-        }
-        
-        function flipCard(e) {
-            const card = e.currentTarget;
-            if (card.classList.contains('flipped') || card.classList.contains('matched') || flippedCards.length === 2) {
-                return;
-            }
-            
-            card.classList.add('flipped');
-            flippedCards.push(card);
-            
-            if (flippedCards.length === 2) {
-                setTimeout(checkMemoryMatch, 1000);
-            }
-        }
-        
-        function checkMemoryMatch() {
-            const [card1, card2] = flippedCards;
-            
-            if (card1.dataset.symbol === card2.dataset.symbol) {
-                card1.classList.add('matched');
-                card2.classList.add('matched');
-                matchedPairs++;
-                
-                document.getElementById('pairsCount').textContent = `${matchedPairs}/${challenges[currentChallenge].cards.length/2}`;
-                
-                if (matchedPairs === challenges[currentChallenge].cards.length / 2) {
-                    setTimeout(correctAnswer, 500);
-                }
-            } else {
-                card1.classList.remove('flipped');
-                card2.classList.remove('flipped');
-            }
-            
-            flippedCards = [];
-        }
-        
-        function checkInput() {
-            const challenge = challenges[currentChallenge];
-            const input = document.getElementById('textInput');
-            const userAnswer = input.value.toLowerCase().trim();
-            
-            if (userAnswer.includes(challenge.answer.toLowerCase())) {
-                input.style.background = 'rgba(76, 175, 80, 0.5)';
-                input.style.borderColor = '#4CAF50';
-                input.value = '✅ ¡Correcto!';
-                correctAnswer();
-            } else {
-                input.style.background = 'rgba(244, 67, 54, 0.5)';
-                input.style.borderColor = '#f44336';
-                setTimeout(() => {
-                    input.style.background = 'rgba(255,255,255,0.2)';
-                    input.style.borderColor = '#ffd700';
-                    input.value = '';
-                    input.placeholder = 'Intenta otra vez...';
-                }, 2000);
-            }
-        }
-        
-        function correctAnswer() {
-            console.log('=== CORRECT ANSWER! ===');
-            score++;
-            
-            console.log(`Score increased to: ${score}`);
-            
-            // Actualizar posición de nave inmediatamente
-            updateSpaceshipPosition();
-            
-            showCelebration(['¡Fantástico! 🎉', '¡Increíble! 🌟', '¡Genial! 🚀', '¡Súper! ⭐', '¡Excelente! 💫'][Math.floor(Math.random() * 5)]);
-            
-            setTimeout(() => {
-                document.getElementById('nextBtn').style.display = 'block';
-            }, 2500);
-        }
-        
-        function wrongAnswer() {
-            setTimeout(() => {
-                document.getElementById('nextBtn').style.display = 'block';
-            }, 2000);
-        }
-        
-        function nextChallenge() {
-            document.getElementById('nextBtn').style.display = 'none';
-            currentChallenge++;
-            
-            // Actualizar posición de la nave
-            updateSpaceshipPosition();
-            
-            if (currentChallenge >= challenges.length) {
-                showFinalMessage();
-            } else {
-                loadChallenge();
-            }
-        }
-        
-        function showFinalMessage() {
-            const container = document.getElementById('challengeContainer');
-            const scoreDisplay = document.getElementById('scoreDisplay');
-            
-            let message = '';
-            let emoji = '';
-            
-            if (score === challenges.length) {
-                message = '¡INCREÍBLE! ¡Respondiste todo perfectamente! Eres un verdadero explorador espacial como Carl Sagan. ¡La nave llegó perfectamente a la Luna! 🌙✨';
-                emoji = '🏆';
-            } else if (score >= 10) {
-                message = '¡EXCELENTE trabajo! Casi perfecto. Carl Sagan estaría muy orgulloso de ti. ¡Sigues siendo un gran explorador! 🌟';
-                emoji = '🥇';
-            } else if (score >= 8) {
-                message = '¡MUY BIEN! Has aprendido mucho sobre Carl Sagan. ¡Sigue siendo curioso como él! 🚀';
-                emoji = '🥈';
-            } else {
-                message = '¡BUEN INTENTO! Has aprendido cosas nuevas sobre Carl Sagan. ¡La curiosidad es lo más importante! 💫';
-                emoji = '🥉';
-            }
-            
-            updateSpaceshipPosition();
-            
-            container.innerHTML = `
-                <div class="final-message">
-                    <div style="font-size: 4em; margin-bottom: 20px;">${emoji}</div>
-                    <h2 style="color: #ffd700; margin-bottom: 20px;">¡Misión Completada!</h2>
-                    <p style="font-size: 1.4em; line-height: 1.5; margin-bottom: 30px;">${message}</p>
-                    <div style="font-size: 1.8em; color: #87ceeb; margin-bottom: 20px;">
-                        Puntuación Final: ${score}/${challenges.length}
-                    </div>
-                    <button class="restart-btn" onclick="restartGame()">
-                        🚀 ¡Jugar Otra Vez! 🚀
-                    </button>
-                </div>
-            `;
-            
-            scoreDisplay.textContent = `¡Juego Completado! Puntuación Final: ${score}/${challenges.length}`;
-            showCelebration('🎉 ¡FELICITACIONES EXPLORADOR! 🎉<br>¡Carl Sagan estaría orgulloso! 🌟');
-        }
-        
-        function restartGame() {
-            currentChallenge = 0;
-            score = 0;
-            selectedConnections = [];
-            memoryCards = [];
-            flippedCards = [];
-            matchedPairs = 0;
-            
-            // Resetear animaciones de nave y Luna
-            const spaceship = document.getElementById('spaceship');
-            const moon = document.querySelector('.moon');
-            spaceship.style.animation = 'float 2s ease-in-out infinite';
-            moon.classList.remove('moon-celebration');
-            
-            updateSpaceshipPosition();
-            loadChallenge();
-        }
-        
-        // Funciones para el juego de clasificación
-        function setupSortingGame() {
-            const categories = document.querySelectorAll('.sort-category');
-            
-            categories.forEach(category => {
-                category.addEventListener('dragover', (e) => {
-                    e.preventDefault();
-                    category.classList.add('drop-ready');
-                });
-                
-                category.addEventListener('dragleave', () => {
-                    category.classList.remove('drop-ready');
-                });
-                
-                category.addEventListener('drop', (e) => {
-                    e.preventDefault();
-                    category.classList.remove('drop-ready');
-                    const draggedItem = e.dataTransfer.getData('text');
-                    const categoryName = category.dataset.category;
-                    checkSorting(draggedItem, categoryName, e.target);
-                });
-            });
-        }
-        
-        function sortDragStart(e) {
-            e.dataTransfer.setData('text', e.target.dataset.item);
-            e.target.classList.add('dragging');
-            setTimeout(() => e.target.classList.remove('dragging'), 0);
-        }
-        
-        function checkSorting(draggedItem, targetCategory, dropTarget) {
-            const challenge = challenges[currentChallenge];
-            const correctCategory = Object.keys(challenge.categories).find(cat => 
-                challenge.categories[cat].includes(draggedItem)
-            );
-            
-            const draggedElement = document.querySelector(`[data-item="${draggedItem}"]`);
-            const categoryItems = dropTarget.closest('.sort-category').querySelector('.category-items');
-            
-            if (correctCategory === targetCategory) {
-                // Correcto
-                draggedElement.classList.add('correct', 'placed');
-                categoryItems.appendChild(draggedElement);
-                
-                const sortedCorrect = document.querySelectorAll('.sort-item.correct').length;
-                document.getElementById('sortedCount').textContent = `${sortedCorrect}/${challenge.items.length}`;
-                
-                if (sortedCorrect === challenge.items.length) {
-                    setTimeout(correctAnswer, 1000);
-                }
-            } else {
-                // Incorrecto
-                draggedElement.classList.add('wrong');
-                setTimeout(() => {
-                    draggedElement.classList.remove('wrong');
-                }, 1000);
-            }
-        }
-        
-        // Funciones para el juego de secuencias
-        function setupSequenceGame() {
-            const slots = document.querySelectorAll('.sequence-slot');
-            
-            slots.forEach(slot => {
-                slot.addEventListener('dragover', (e) => {
-                    e.preventDefault();
-                    slot.classList.add('drop-ready');
-                });
-                
-                slot.addEventListener('dragleave', () => {
-                    slot.classList.remove('drop-ready');
-                });
-                
-                slot.addEventListener('drop', (e) => {
-                    e.preventDefault();
-                    slot.classList.remove('drop-ready');
-                    const draggedItem = e.dataTransfer.getData('text');
-                    const draggedIndex = e.dataTransfer.getData('index');
-                    const slotIndex = slot.dataset.slot;
-                    checkSequence(draggedItem, draggedIndex, slotIndex, slot);
-                });
-            });
-        }
-        
-        function sequenceDragStart(e) {
-            e.dataTransfer.setData('text', e.target.dataset.item);
-            e.dataTransfer.setData('index', e.target.dataset.index);
-            e.target.classList.add('dragging');
-            setTimeout(() => e.target.classList.remove('dragging'), 0);
-        }
-        
-        function checkSequence(draggedItem, draggedIndex, slotIndex, slot) {
-            const challenge = challenges[currentChallenge];
-            const correctOrder = challenge.correctOrder;
-            const correctIndex = correctOrder[parseInt(slotIndex)];
-            
-            const draggedElement = document.querySelector(`[data-item="${draggedItem}"][data-index="${draggedIndex}"]`);
-            
-            if (parseInt(draggedIndex) === correctIndex) {
-                // Correcto
-                if (slot.children.length === 0) { // Solo si el slot está vacío
-                    draggedElement.classList.add('placed');
-                    draggedElement.style.background = 'linear-gradient(45deg, #4CAF50, #45a049)';
-                    slot.appendChild(draggedElement);
-                    
-                    const placedCorrect = document.querySelectorAll('.sequence-slot .sequence-item').length;
-                    document.getElementById('sequenceCount').textContent = `${placedCorrect}/${challenge.items.length}`;
-                    
-                    if (placedCorrect === challenge.items.length) {
-                        setTimeout(correctAnswer, 1000);
-                    }
-                } else {
-                    // El slot ya está ocupado
-                    draggedElement.classList.add('wrong');
-                    setTimeout(() => {
-                        draggedElement.classList.remove('wrong');
-                    }, 1000);
-                }
-            } else {
-                // Incorrecto
-                draggedElement.classList.add('wrong');
-                setTimeout(() => {
-                    draggedElement.classList.remove('wrong');
-                }, 1000);
-            }
-        }
-        
-        // Inicializar el juego
+
         createStars();
-        loadChallenge();
-        updateSpaceshipPosition();
     </script>
 </body>
 </html>
