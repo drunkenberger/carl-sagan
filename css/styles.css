@@ -547,6 +547,153 @@ body {
   margin-bottom: var(--space-6);
 }
 
+/* === PALE BLUE DOT SECTION === */
+.pale-blue-dot-section {
+  margin: var(--space-20) 0;
+  background: linear-gradient(135deg, rgb(15, 15, 35), rgb(30, 30, 60));
+  border-radius: var(--radius-2xl);
+  padding: var(--space-12);
+  border: 2px solid var(--electric-cyan);
+  box-shadow: 0 0 30px rgba(0, 255, 255, 0.4), var(--shadow-strong);
+  position: relative;
+  z-index: 10;
+}
+
+.pale-blue-dot-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.pale-blue-dot-title {
+  font-family: var(--font-display);
+  font-size: var(--text-4xl);
+  color: var(--title-primary);
+  text-align: center;
+  margin-bottom: var(--space-12);
+  font-weight: 700;
+  text-shadow: 0 3px 15px rgba(135, 206, 235, 0.6);
+  letter-spacing: -0.02em;
+}
+
+.pale-blue-dot-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-12);
+  align-items: center;
+}
+
+.pale-blue-dot-image-wrapper {
+  position: relative;
+  background: rgb(10, 10, 30);
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-strong);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  z-index: 15;
+}
+
+.pale-blue-dot-image {
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius-lg);
+  display: block;
+  box-shadow: var(--shadow-medium);
+}
+
+.pale-blue-dot-marker {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 40px;
+  height: 40px;
+  border: 3px solid var(--electric-cyan);
+  border-radius: 50%;
+  background: rgba(0, 255, 255, 0.2);
+  animation: pale-blue-dot-pulse 3s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes pale-blue-dot-pulse {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.2);
+    opacity: 1;
+  }
+}
+
+.pale-blue-dot-text {
+  background: rgb(20, 20, 40);
+  border-radius: var(--radius-xl);
+  padding: var(--space-8);
+  border: 2px solid var(--galaxy-violet);
+  box-shadow: var(--shadow-medium);
+  z-index: 15;
+}
+
+.pale-blue-dot-description {
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  color: var(--electric-cyan);
+  margin-bottom: var(--space-6);
+  font-weight: 600;
+  text-align: center;
+}
+
+.pale-blue-dot-explanation {
+  font-family: var(--font-reading);
+  font-size: var(--text-lg);
+  line-height: 1.8;
+  color: var(--text-secondary);
+  margin-bottom: var(--space-6);
+  font-weight: 400;
+}
+
+.pale-blue-dot-quote {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  color: var(--star-gold);
+  font-style: italic;
+  text-align: center;
+  padding: var(--space-4);
+  border-left: 4px solid var(--star-gold);
+  background: rgba(255, 214, 10, 0.1);
+  border-radius: var(--radius-md);
+  font-weight: 500;
+}
+
+/* Responsive design for Pale Blue Dot section */
+@media (max-width: 768px) {
+  .pale-blue-dot-content {
+    grid-template-columns: 1fr;
+    gap: var(--space-8);
+  }
+
+  .pale-blue-dot-title {
+    font-size: var(--text-3xl);
+  }
+
+  .pale-blue-dot-description {
+    font-size: var(--text-xl);
+  }
+
+  .pale-blue-dot-explanation {
+    font-size: var(--text-base);
+  }
+
+  .pale-blue-dot-quote {
+    font-size: var(--text-lg);
+  }
+
+  .pale-blue-dot-section {
+    margin: var(--space-16) 0;
+    padding: var(--space-8);
+  }
+}
+
 /* === ACTIVITIES SECTION === */
 .activities-grid {
   margin: var(--space-16) 0;
