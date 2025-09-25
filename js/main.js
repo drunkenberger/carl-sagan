@@ -379,6 +379,7 @@ function volverInicio() {
     document.querySelector('.activities-grid').style.display = 'grid';
     document.querySelector('.hero-section').style.display = 'block';
     document.querySelector('.fun-facts').style.display = 'block';
+    document.querySelector('.pale-blue-dot-section').style.display = 'block';
     // Reiniciar carousel al volver
     startCarouselAutoplay();
     reproducirSonido('back');
@@ -388,6 +389,7 @@ function ocultarTodo() {
     document.querySelector('.activities-grid').style.display = 'none';
     document.querySelector('.hero-section').style.display = 'none';
     document.querySelector('.fun-facts').style.display = 'none';
+    document.querySelector('.pale-blue-dot-section').style.display = 'none';
     document.querySelectorAll('.content-section').forEach(section => {
         section.classList.add('hidden');
     });
