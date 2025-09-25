@@ -10,9 +10,8 @@ const CAROUSEL_INTERVAL = 5000; // 5 segundos
 
 // Funciones de navegación
 function abrirJuego() {
-    ocultarTodo();
-    document.getElementById('juego-section').classList.remove('hidden');
-    document.getElementById('juego-iframe').src = 'assets/juego/index.html';
+    // Ir directamente al nuevo juego mejorado
+    window.location.href = 'assets/juego/game_new.html';
     reproducirSonido('click');
 }
 
