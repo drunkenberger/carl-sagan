@@ -742,6 +742,46 @@ function setupRadioPlaylist() {
             title: 'Estrellas y Más (Extended)',
             artist: 'Carl Sagan',
             src: 'assets/canciones/Carl Sagan_ Estrellas y Más (1).mp3'
+        },
+        {
+            title: 'Bailando con las Estrellas',
+            artist: 'Radio Cosmos',
+            src: 'assets/canciones/Bailando con las Estrellas.mp3'
+        },
+        {
+            title: "Carl Sagan's Starry Life",
+            artist: 'Radio Cosmos',
+            src: "assets/canciones/Carl Sagan's Starry Life.mp3"
+        },
+        {
+            title: 'El Viajero de las Estrellas (Version 2)',
+            artist: 'Carl Sagan',
+            src: 'assets/canciones/Carl Sagan_ El Viajero de las Estrellas (1).mp3'
+        },
+        {
+            title: 'Polvo de Estrellas',
+            artist: 'Radio Cosmos',
+            src: 'assets/canciones/Polvo de Estrellas.mp3'
+        },
+        {
+            title: 'Punto Azul Pálido',
+            artist: 'Carl Sagan',
+            src: 'assets/canciones/Punto Azul Pálido (1).mp3'
+        },
+        {
+            title: 'Stargazing with Sagan',
+            artist: 'Radio Cosmos',
+            src: 'assets/canciones/Stargazing with Sagan.mp3'
+        },
+        {
+            title: 'Stellar Playground',
+            artist: 'Radio Cosmos',
+            src: 'assets/canciones/Stellar Playground.mp3'
+        },
+        {
+            title: 'We Are Stardust',
+            artist: 'Carl Sagan',
+            src: 'assets/canciones/We Are Stardust.mp3'
         }
     ];
 
