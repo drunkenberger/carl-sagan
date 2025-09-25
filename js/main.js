@@ -10,8 +10,8 @@ const CAROUSEL_INTERVAL = 5000; // 5 segundos
 
 // Funciones de navegación
 function abrirJuego() {
-    // Ir directamente al nuevo juego mejorado
-    window.location.href = 'assets/juego/game_new.html';
+    // Ir directamente al juego clásico original
+    window.location.href = 'assets/juego/juego_carl.html';
     reproducirSonido('click');
 }
 
