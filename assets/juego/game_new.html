@@ -484,6 +484,119 @@
             50% { transform: scale(1.2) rotate(180deg); }
             100% { transform: scale(1) rotate(360deg); }
         }
+
+        /* Estilos para confeti */
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: #ffd700;
+            animation: confetti-fall 3s linear infinite;
+            z-index: 9999;
+        }
+
+        .confetti:nth-child(odd) {
+            background: #ff6b6b;
+            width: 8px;
+            height: 8px;
+        }
+
+        .confetti:nth-child(3n) {
+            background: #4ecdc4;
+            border-radius: 50%;
+        }
+
+        .confetti:nth-child(4n) {
+            background: #4CAF50;
+            width: 6px;
+            height: 15px;
+        }
+
+        @keyframes confetti-fall {
+            0% {
+                transform: translateY(-100vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        /* Popup especial para llegada a la luna */
+        .moon-arrival-popup {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            backdrop-filter: blur(10px);
+        }
+
+        .moon-popup-content {
+            background: linear-gradient(135deg, #ffd700, #ffed4a, #4ecdc4);
+            padding: 40px;
+            border-radius: 30px;
+            text-align: center;
+            color: #1a1a2e;
+            max-width: 500px;
+            margin: 20px;
+            animation: moonPopupShow 1s ease;
+            border: 5px solid white;
+            box-shadow: 0 0 50px rgba(255,215,0,0.8);
+        }
+
+        .moon-popup-content h2 {
+            font-size: clamp(2em, 5vw, 3em);
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .moon-popup-content p {
+            font-size: clamp(1.2em, 3vw, 1.5em);
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+
+        .moon-continue-btn {
+            background: linear-gradient(45deg, #4CAF50, #45a049);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 1.2em;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+            border: 3px solid transparent;
+        }
+
+        .moon-continue-btn:hover {
+            transform: scale(1.1);
+            border-color: #1a1a2e;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+        }
+
+        @keyframes moonPopupShow {
+            0% {
+                transform: scale(0) rotate(-180deg);
+                opacity: 0;
+            }
+            50% {
+                transform: scale(1.2) rotate(0deg);
+                opacity: 0.8;
+            }
+            100% {
+                transform: scale(1) rotate(0deg);
+                opacity: 1;
+            }
+        }
     </style>
 </head>
 <body>
@@ -541,6 +654,19 @@
     <div class="celebration-overlay" id="celebrationOverlay">
         <div class="celebration-content" id="celebrationContent">
             ¡Excelente! 🎉
+        </div>
+    </div>
+
+    <!-- Popup especial para llegada a la luna -->
+    <div class="moon-arrival-popup" id="moonArrivalPopup">
+        <div class="moon-popup-content">
+            <h2>🎆 ¡FELICITACIONES! 🎆</h2>
+            <p>🚀 ¡Has llegado exitosamente a la Luna! 🌙</p>
+            <p>🌟 Carl Sagan estaría muy orgulloso de ti. 🌟</p>
+            <p>✨ ¡Ahora continúa tu aventura espacial! ✨</p>
+            <button class="moon-continue-btn" onclick="closeMoonPopup()">
+                🚀 ¡Continuar Aventura! 🌌
+            </button>
         </div>
     </div>
 
@@ -707,7 +833,13 @@
                 options[selectedIndex].classList.add('correct');
                 score++;
                 updateSpaceship();
-                showCelebration('¡Fantástico! 🌟');
+
+                // Si es la primera pregunta, no mostrar celebración normal
+                if (currentChallenge === 0) {
+                    // La celebración especial se maneja en updateSpaceship()
+                } else {
+                    showCelebration('¡Fantástico! 🌟');
+                }
             } else {
                 options[selectedIndex].classList.add('wrong');
                 options[challenge.correct].classList.add('correct');
@@ -717,9 +849,14 @@
             // Actualizar progreso
             updateProgress();
 
-            setTimeout(() => {
-                document.getElementById('nextBtn').style.display = 'block';
-            }, 2500);
+            // Si es la primera pregunta correcta, no mostrar botón siguiente automáticamente
+            if (currentChallenge === 0 && selectedIndex === challenge.correct) {
+                // El botón se mostrará desde closeMoonPopup()
+            } else {
+                setTimeout(() => {
+                    document.getElementById('nextBtn').style.display = 'block';
+                }, 2500);
+            }
         }
 
         // Generar HTML para multiple choice
@@ -1013,10 +1150,29 @@
         // Actualizar posición de la nave
         function updateSpaceship() {
             const spaceship = document.getElementById('spaceship');
-            const progress = (currentChallenge + 1) / challenges.length;
-            const newPosition = 20 + (progress * 60); // Del 20% al 80%
-            spaceship.style.left = newPosition + '%';
-            spaceship.style.filter = 'drop-shadow(0 0 20px #ffd700)';
+
+            // Si es la primera pregunta correcta, llevar directamente a la luna
+            if (currentChallenge === 0 && score === 1) {
+                spaceship.style.left = '80%'; // Llegar a la luna
+                spaceship.style.transform = 'translateY(-50%) scale(1.3)';
+                spaceship.style.filter = 'drop-shadow(0 0 30px #ffd700)';
+
+                // Hacer que la luna brille
+                const moon = document.querySelector('.moon');
+                moon.style.boxShadow = '0 0 50px rgba(255, 215, 0, 0.8)';
+                moon.style.transform = 'scale(1.2)';
+
+                // Mostrar celebración especial con confeti
+                setTimeout(() => {
+                    showMoonArrivalCelebration();
+                }, 1000);
+            } else if (currentChallenge > 0) {
+                // Continuar desde la luna hacia adelante para las siguientes preguntas
+                const progress = (currentChallenge) / (challenges.length - 1);
+                const newPosition = 80 + (progress * 15); // Del 80% al 95%
+                spaceship.style.left = Math.min(newPosition, 95) + '%';
+                spaceship.style.filter = 'drop-shadow(0 0 20px #ffd700)';
+            }
         }
 
         // Actualizar barra de progreso
@@ -1043,6 +1199,48 @@
             setTimeout(() => {
                 overlay.style.display = 'none';
             }, 2500);
+        }
+
+        // Mostrar celebración especial de llegada a la luna
+        function showMoonArrivalCelebration() {
+            // Crear confeti
+            createConfetti();
+
+            // Mostrar popup después del confeti
+            setTimeout(() => {
+                const popup = document.getElementById('moonArrivalPopup');
+                popup.style.display = 'flex';
+            }, 1500);
+        }
+
+        // Crear confeti
+        function createConfetti() {
+            for (let i = 0; i < 100; i++) {
+                const confetti = document.createElement('div');
+                confetti.classList.add('confetti');
+                confetti.style.left = Math.random() * 100 + '%';
+                confetti.style.animationDelay = Math.random() * 2 + 's';
+                confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                document.body.appendChild(confetti);
+
+                // Remover confeti después de la animación
+                setTimeout(() => {
+                    if (confetti.parentNode) {
+                        confetti.parentNode.removeChild(confetti);
+                    }
+                }, 4000);
+            }
+        }
+
+        // Cerrar popup de la luna
+        function closeMoonPopup() {
+            const popup = document.getElementById('moonArrivalPopup');
+            popup.style.display = 'none';
+
+            // Mostrar botón siguiente
+            setTimeout(() => {
+                document.getElementById('nextBtn').style.display = 'block';
+            }, 500);
         }
 
         // Mostrar mensaje final
@@ -1129,7 +1327,13 @@
                 dropZone.style.borderColor = '#4CAF50';
                 score++;
                 updateSpaceship();
-                showCelebration('¡Fantástico! 🌟');
+
+                // Si es la primera pregunta, no mostrar celebración normal
+                if (currentChallenge === 0) {
+                    // La celebración especial se maneja en updateSpaceship()
+                } else {
+                    showCelebration('¡Fantástico! 🌟');
+                }
             } else {
                 dropZone.innerHTML = `<div style="color: #f44336; font-size: 1.5em; font-weight: bold;">${data}</div>`;
                 dropZone.style.background = 'linear-gradient(135deg, #f44336, #d32f2f)';
@@ -1145,9 +1349,15 @@
             });
 
             updateProgress();
-            setTimeout(() => {
-                document.getElementById('nextBtn').style.display = 'block';
-            }, 2500);
+
+            // Si es la primera pregunta correcta, no mostrar botón siguiente automáticamente
+            if (currentChallenge === 0 && data === challenge.correct) {
+                // El botón se mostrará desde closeMoonPopup()
+            } else {
+                setTimeout(() => {
+                    document.getElementById('nextBtn').style.display = 'block';
+                }, 2500);
+            }
         }
 
         // Connections functions
@@ -1202,7 +1412,14 @@
                 document.querySelectorAll('.connection-item').forEach(item => item.classList.add('matched'));
                 score++;
                 updateSpaceship();
-                showCelebration('¡Fantástico! 🌟');
+
+                // Si es la primera pregunta, no mostrar celebración normal
+                if (currentChallenge === 0) {
+                    // La celebración especial se maneja en updateSpaceship()
+                } else {
+                    showCelebration('¡Fantástico! 🌟');
+                }
+
                 document.getElementById('connectionsFeedback').innerHTML = `<div style="color: #4CAF50; font-weight: bold;">¡Todas las conexiones correctas! 🎉</div>`;
             } else {
                 showCelebration('¡Revisa tus conexiones! 💪');
@@ -1212,9 +1429,14 @@
             document.getElementById('checkConnectionsBtn').style.display = 'none';
             updateProgress();
 
-            setTimeout(() => {
-                document.getElementById('nextBtn').style.display = 'block';
-            }, 2500);
+            // Si es la primera pregunta correcta, no mostrar botón siguiente automáticamente
+            if (currentChallenge === 0 && correctConnections === challenge.correctPairs.length && connections.length === challenge.correctPairs.length) {
+                // El botón se mostrará desde closeMoonPopup()
+            } else {
+                setTimeout(() => {
+                    document.getElementById('nextBtn').style.display = 'block';
+                }, 2500);
+            }
         }
 
         // Input functions
@@ -1235,7 +1457,13 @@
                 input.style.color = 'white';
                 score++;
                 updateSpaceship();
-                showCelebration('¡Fantástico! 🌟');
+
+                // Si es la primera pregunta, no mostrar celebración normal
+                if (currentChallenge === 0) {
+                    // La celebración especial se maneja en updateSpaceship()
+                } else {
+                    showCelebration('¡Fantástico! 🌟');
+                }
             } else {
                 input.style.background = 'linear-gradient(135deg, #f44336, #d32f2f)';
                 input.style.color = 'white';
@@ -1246,9 +1474,15 @@
             document.getElementById('checkInputBtn').disabled = true;
 
             updateProgress();
-            setTimeout(() => {
-                document.getElementById('nextBtn').style.display = 'block';
-            }, 2500);
+
+            // Si es la primera pregunta correcta, no mostrar botón siguiente automáticamente
+            if (currentChallenge === 0 && (userAnswer === correctAnswer || userAnswer.includes(correctAnswer))) {
+                // El botón se mostrará desde closeMoonPopup()
+            } else {
+                setTimeout(() => {
+                    document.getElementById('nextBtn').style.display = 'block';
+                }, 2500);
+            }
         }
 
         // Memory functions
@@ -1286,11 +1520,24 @@
                 if (matchedPairs === challenge.cards.length / 2) {
                     score++;
                     updateSpaceship();
-                    showCelebration('¡Fantástico! Todas las parejas encontradas! 🌟');
+
+                    // Si es la primera pregunta, no mostrar celebración normal
+                    if (currentChallenge === 0) {
+                        // La celebración especial se maneja en updateSpaceship()
+                    } else {
+                        showCelebration('¡Fantástico! Todas las parejas encontradas! 🌟');
+                    }
+
                     updateProgress();
-                    setTimeout(() => {
-                        document.getElementById('nextBtn').style.display = 'block';
-                    }, 2500);
+
+                    // Si es la primera pregunta correcta, no mostrar botón siguiente automáticamente
+                    if (currentChallenge === 0) {
+                        // El botón se mostrará desde closeMoonPopup()
+                    } else {
+                        setTimeout(() => {
+                            document.getElementById('nextBtn').style.display = 'block';
+                        }, 2500);
+                    }
                 }
             } else {
                 element1.classList.remove('flipped');
