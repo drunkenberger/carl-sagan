@@ -1181,13 +1181,30 @@ body {
 
 /* === CARLITO AGENT SECTION === */
 .voice-agent-container {
-  max-width: 600px;
+  max-width: 800px;
   margin: 0 auto;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+}
+
+.agent-info-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: var(--space-8);
+  align-items: start;
 }
 
 .agent-info {
-  margin-bottom: var(--space-8);
+  margin-bottom: 0;
+}
+
+@media (max-width: 768px) {
+  .agent-info-wrapper {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+  }
 }
 
 .agent-avatar {
@@ -3325,18 +3342,18 @@ input:focus,
 /* === ELEVENLABS WIDGET CONTAINER === */
 .elevenlabs-widget-container {
   margin: var(--space-8) 0;
-  padding: var(--space-6);
-  background: var(--bg-glass);
+  padding: var(--space-8);
+  background: rgb(20, 20, 40);
   border: 2px solid rgba(57, 255, 20, 0.3);
   border-radius: var(--radius-xl);
-  /* Backdrop filters removed for solid design */
-  /* Webkit backdrop filters removed for solid design */
   box-shadow: 0 8px 25px rgba(57, 255, 20, 0.2);
   transition: all var(--transition-normal);
-  min-height: 400px;
+  min-height: 500px;
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
+  z-index: 100;
 }
 
 .elevenlabs-widget-container:hover {
@@ -3346,9 +3363,18 @@ input:focus,
 
 /* Estilos para el widget ElevenLabs */
 elevenlabs-convai {
-  width: 100%;
-  max-width: 500px;
+  width: 100% !important;
+  max-width: 500px !important;
+  height: 400px !important;
   border-radius: var(--radius-lg) !important;
+  margin: 0 auto !important;
+  display: block !important;
+  position: relative !important;
+  top: auto !important;
+  left: auto !important;
+  right: auto !important;
+  bottom: auto !important;
+  transform: none !important;
 }
 
 .widget-instructions {
