@@ -557,20 +557,85 @@
                 correct: 0
             },
             {
+                type: 'drag_drop',
+                title: 'Reto 2: Herramientas de Carl',
+                question: 'Arrastra lo que Carl usaba para ver las estrellas:',
+                items: ['🔭 Telescopio', '🍌 Banana', '🎾 Pelota', '📚 Libro'],
+                correct: '🔭 Telescopio',
+                dropText: 'Arrastra aquí la herramienta correcta'
+            },
+            {
                 type: 'multiple_choice',
-                title: 'Reto 2: ¿Qué estudiaba Carl?',
+                title: 'Reto 3: ¿Qué estudiaba Carl?',
                 question: '¿Cuál de estas cosas NO estudiaba Carl Sagan?',
                 options: ['🌟 Las estrellas brillantes', '🍕 Recetas de pizza', '🪐 Los planetas lejanos', '🌙 La Luna hermosa'],
                 correct: 1
             },
             {
+                type: 'connections',
+                title: 'Reto 4: Conecta las ideas de Carl',
+                question: 'Conecta cada cosa con lo que Carl nos enseñó:',
+                leftItems: ['🌟 Estrellas', '❓ Preguntas', '🌍 Tierra'],
+                rightItems: ['Nuestro hogar que cuidar', 'Siempre debemos hacerlas', 'Están hechas del mismo material que nosotros'],
+                correctPairs: [[0,2], [1,1], [2,0]]
+            },
+            {
+                type: 'input',
+                title: 'Reto 5: Completa la frase',
+                question: 'Carl decía: "Somos polvo de ______"',
+                answer: 'estrellas',
+                hint: 'Pista: ✨ Brillan en el cielo nocturno'
+            },
+            {
                 type: 'multiple_choice',
-                title: 'Reto 3: La vida de Carl',
+                title: 'Reto 6: La vida de Carl',
                 question: '¿Qué hizo primero Carl Sagan en su vida?',
                 options: ['📺 Hacer programas de TV', '👶 Nacer y ser niño curioso', '🔭 Usar telescopios grandes', '🎓 Estudiar en la universidad'],
                 correct: 1
+            },
+            {
+                type: 'multiple_choice',
+                title: 'Reto 7: El planeta de Carl',
+                question: '¿En qué planeta vivía Carl Sagan?',
+                options: ['La Tierra 🌍', 'Marte 🔴', 'La Luna 🌙', 'El Sol ☀️'],
+                correct: 0
+            },
+            {
+                type: 'memory',
+                title: 'Reto 8: Memoria Espacial',
+                question: 'Encuentra todas las parejas de cosas que le gustaban a Carl:',
+                cards: ['🌟', '🌟', '🔭', '🔭', '📚', '📚', '🌍', '🌍']
+            },
+            {
+                type: 'drag_drop',
+                title: 'Reto 9: Mensaje de Carl',
+                question: 'Arrastra lo que Carl nos enseñó a hacer:',
+                items: ['🤔 Hacer preguntas', '😴 Solo dormir', '📺 Solo ver TV', '🍭 Comer dulces'],
+                correct: '🤔 Hacer preguntas',
+                dropText: 'Arrastra la enseñanza de Carl'
+            },
+            {
+                type: 'multiple_choice',
+                title: 'Reto 10: Los programas de Carl',
+                question: '¿Cómo compartía Carl su amor por las estrellas?',
+                options: ['En TV y libros 📺📚', 'Solo cantando 🎵', 'Solo bailando 💃', 'Solo durmiendo 😴'],
+                correct: 0
+            },
+            {
+                type: 'input',
+                title: 'Reto 11: El trabajo de Carl',
+                question: 'Carl era un cien______',
+                answer: 'cientifico',
+                hint: 'Pista: 🔬 Persona que estudia y descubre cosas'
+            },
+            {
+                type: 'connections',
+                title: 'Reto 12: Las cualidades de Carl',
+                question: 'Conecta cada cualidad con su significado:',
+                leftItems: ['🤔 Curioso', '🌟 Explorador', '💚 Cuidadoso'],
+                rightItems: ['Protegía nuestro planeta', 'Siempre hacía preguntas', 'Descubría cosas nuevas'],
+                correctPairs: [[0,1], [1,2], [2,0]]
             }
-            // Agrega más desafíos aquí...
         ];
 
         // Crear estrellas
@@ -603,14 +668,27 @@
             let html = `
                 <h2 class="challenge-title">${challenge.title}</h2>
                 <div class="challenge-question">${challenge.question}</div>
-                <div class="game-options">
             `;
 
-            challenge.options.forEach((option, index) => {
-                html += `<div class="option-card" onclick="checkAnswer(${index})">${option}</div>`;
-            });
+            // Generar HTML según el tipo de desafío
+            switch (challenge.type) {
+                case 'multiple_choice':
+                    html += generateMultipleChoice(challenge);
+                    break;
+                case 'drag_drop':
+                    html += generateDragDrop(challenge);
+                    break;
+                case 'connections':
+                    html += generateConnections(challenge);
+                    break;
+                case 'input':
+                    html += generateInput(challenge);
+                    break;
+                case 'memory':
+                    html += generateMemory(challenge);
+                    break;
+            }
 
-            html += '</div>';
             container.innerHTML = html;
 
             // Ocultar botón siguiente
@@ -644,6 +722,294 @@
             }, 2500);
         }
 
+        // Generar HTML para multiple choice
+        function generateMultipleChoice(challenge) {
+            let html = '<div class="game-options">';
+            challenge.options.forEach((option, index) => {
+                html += `<div class="option-card" onclick="checkAnswer(${index})">${option}</div>`;
+            });
+            html += '</div>';
+            return html;
+        }
+
+        // Generar HTML para drag and drop
+        function generateDragDrop(challenge) {
+            let html = `
+                <div class="drag-drop-container">
+                    <div class="drop-zone" id="dropZone" ondrop="dropHandler(event)" ondragover="allowDrop(event)">
+                        <div class="drop-text">${challenge.dropText}</div>
+                    </div>
+                    <div class="drag-items">
+            `;
+            challenge.items.forEach((item, index) => {
+                html += `<div class="drag-item" draggable="true" ondragstart="dragStart(event)" data-value="${item}" data-index="${index}">${item}</div>`;
+            });
+            html += `
+                    </div>
+                </div>
+                <style>
+                    .drag-drop-container { margin: 20px 0; }
+                    .drop-zone {
+                        border: 3px dashed #ffd700;
+                        padding: 40px;
+                        text-align: center;
+                        margin-bottom: 20px;
+                        border-radius: 15px;
+                        background: rgba(255,215,0,0.1);
+                        min-height: 100px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                    }
+                    .drop-text { color: #ffd700; font-size: 1.2em; }
+                    .drag-items {
+                        display: grid;
+                        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                        gap: 15px;
+                    }
+                    .drag-item {
+                        background: linear-gradient(135deg, #4CAF50, #45a049);
+                        padding: 20px;
+                        border-radius: 15px;
+                        cursor: grab;
+                        text-align: center;
+                        color: white;
+                        font-weight: bold;
+                        transition: all 0.3s ease;
+                        border: 3px solid transparent;
+                    }
+                    .drag-item:hover {
+                        transform: translateY(-5px);
+                        border-color: #ffd700;
+                        box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+                    }
+                    .drop-zone.dragover {
+                        background: rgba(255,215,0,0.3);
+                        border-color: #ff6b6b;
+                    }
+                </style>
+            `;
+            return html;
+        }
+
+        // Generar HTML para connections
+        function generateConnections(challenge) {
+            let html = `
+                <div class="connections-container">
+                    <div class="connections-left">
+            `;
+            challenge.leftItems.forEach((item, index) => {
+                html += `<div class="connection-item left" onclick="selectConnection('left', ${index})" data-index="${index}">${item}</div>`;
+            });
+            html += `
+                    </div>
+                    <div class="connections-right">
+            `;
+            challenge.rightItems.forEach((item, index) => {
+                html += `<div class="connection-item right" onclick="selectConnection('right', ${index})" data-index="${index}">${item}</div>`;
+            });
+            html += `
+                    </div>
+                </div>
+                <div class="connections-feedback" id="connectionsFeedback"></div>
+                <button class="check-connections-btn" onclick="checkConnections()" id="checkConnectionsBtn" style="display: none;">¡Verificar Conexiones! ✨</button>
+                <style>
+                    .connections-container {
+                        display: grid;
+                        grid-template-columns: 1fr 1fr;
+                        gap: 30px;
+                        margin: 20px 0;
+                    }
+                    .connection-item {
+                        background: linear-gradient(135deg, #4CAF50, #45a049);
+                        padding: 20px;
+                        border-radius: 15px;
+                        cursor: pointer;
+                        text-align: center;
+                        color: white;
+                        font-weight: bold;
+                        margin-bottom: 15px;
+                        transition: all 0.3s ease;
+                        border: 3px solid transparent;
+                    }
+                    .connection-item:hover {
+                        transform: translateY(-5px);
+                        border-color: #ffd700;
+                        box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+                    }
+                    .connection-item.selected {
+                        background: linear-gradient(135deg, #ffd700, #ffed4a);
+                        color: #1a1a2e;
+                        border-color: #4CAF50;
+                    }
+                    .connection-item.matched {
+                        background: linear-gradient(135deg, #81C784, #66BB6A);
+                        pointer-events: none;
+                    }
+                    .check-connections-btn {
+                        background: linear-gradient(45deg, #ffd700, #ffed4a);
+                        color: #1a1a2e;
+                        border: none;
+                        padding: 15px 30px;
+                        border-radius: 25px;
+                        font-size: 1.2em;
+                        font-weight: bold;
+                        cursor: pointer;
+                        margin: 20px auto;
+                        display: block;
+                        transition: all 0.3s ease;
+                    }
+                    .connections-feedback {
+                        text-align: center;
+                        margin: 15px 0;
+                        font-size: 1.1em;
+                        min-height: 30px;
+                    }
+                </style>
+            `;
+            return html;
+        }
+
+        // Generar HTML para input
+        function generateInput(challenge) {
+            let html = `
+                <div class="input-container">
+                    <input type="text" id="answerInput" class="answer-input" placeholder="Escribe tu respuesta aquí..." onkeyup="checkInputLength()">
+                    <div class="input-hint">${challenge.hint}</div>
+                    <button class="check-input-btn" onclick="checkInputAnswer()" id="checkInputBtn" disabled>¡Verificar Respuesta! ✨</button>
+                </div>
+                <style>
+                    .input-container { margin: 20px 0; text-align: center; }
+                    .answer-input {
+                        width: 100%;
+                        max-width: 400px;
+                        padding: 20px;
+                        font-size: 1.3em;
+                        border: 3px solid #ffd700;
+                        border-radius: 15px;
+                        background: rgba(255,255,255,0.9);
+                        color: #1a1a2e;
+                        text-align: center;
+                        font-family: 'Comic Sans MS', cursive;
+                        margin-bottom: 15px;
+                    }
+                    .answer-input:focus {
+                        outline: none;
+                        border-color: #4CAF50;
+                        box-shadow: 0 0 20px rgba(76,175,80,0.4);
+                    }
+                    .input-hint {
+                        color: #87ceeb;
+                        font-size: 1.1em;
+                        margin-bottom: 20px;
+                    }
+                    .check-input-btn {
+                        background: linear-gradient(45deg, #ffd700, #ffed4a);
+                        color: #1a1a2e;
+                        border: none;
+                        padding: 15px 30px;
+                        border-radius: 25px;
+                        font-size: 1.2em;
+                        font-weight: bold;
+                        cursor: pointer;
+                        transition: all 0.3s ease;
+                    }
+                    .check-input-btn:disabled {
+                        background: #666;
+                        cursor: not-allowed;
+                    }
+                </style>
+            `;
+            return html;
+        }
+
+        // Generar HTML para memory
+        function generateMemory(challenge) {
+            let html = `
+                <div class="memory-container">
+                    <div class="memory-grid" id="memoryGrid">
+            `;
+            challenge.cards.forEach((card, index) => {
+                html += `<div class="memory-card" onclick="flipCard(${index})" data-card="${card}" data-index="${index}">
+                    <div class="card-inner">
+                        <div class="card-front">❓</div>
+                        <div class="card-back">${card}</div>
+                    </div>
+                </div>`;
+            });
+            html += `
+                    </div>
+                    <div class="memory-stats" id="memoryStats">Parejas encontradas: 0 / ${challenge.cards.length / 2}</div>
+                </div>
+                <style>
+                    .memory-container { margin: 20px 0; }
+                    .memory-grid {
+                        display: grid;
+                        grid-template-columns: repeat(4, 1fr);
+                        gap: 15px;
+                        max-width: 400px;
+                        margin: 0 auto 20px;
+                    }
+                    .memory-card {
+                        aspect-ratio: 1;
+                        cursor: pointer;
+                        perspective: 1000px;
+                    }
+                    .card-inner {
+                        position: relative;
+                        width: 100%;
+                        height: 100%;
+                        text-align: center;
+                        transition: transform 0.6s;
+                        transform-style: preserve-3d;
+                    }
+                    .memory-card.flipped .card-inner {
+                        transform: rotateY(180deg);
+                    }
+                    .card-front, .card-back {
+                        position: absolute;
+                        width: 100%;
+                        height: 100%;
+                        backface-visibility: hidden;
+                        border-radius: 15px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        font-size: 2em;
+                        font-weight: bold;
+                    }
+                    .card-front {
+                        background: linear-gradient(135deg, #4CAF50, #45a049);
+                        color: white;
+                    }
+                    .card-back {
+                        background: linear-gradient(135deg, #ffd700, #ffed4a);
+                        color: #1a1a2e;
+                        transform: rotateY(180deg);
+                    }
+                    .memory-card.matched {
+                        pointer-events: none;
+                    }
+                    .memory-card.matched .card-back {
+                        background: linear-gradient(135deg, #81C784, #66BB6A);
+                        color: white;
+                    }
+                    .memory-stats {
+                        text-align: center;
+                        color: #87ceeb;
+                        font-size: 1.2em;
+                        font-weight: bold;
+                    }
+                    @media (max-width: 480px) {
+                        .memory-grid {
+                            grid-template-columns: repeat(3, 1fr);
+                        }
+                    }
+                </style>
+            `;
+            return html;
+        }
+
         // Actualizar posición de la nave
         function updateSpaceship() {
             const spaceship = document.getElementById('spaceship');
@@ -663,6 +1029,7 @@
         // Siguiente desafío
         function nextChallenge() {
             currentChallenge++;
+            resetGameVariables();
             loadChallenge();
         }
 
@@ -718,6 +1085,7 @@
             spaceship.style.left = '20%';
             spaceship.style.filter = 'drop-shadow(0 0 15px #ffd700)';
             document.getElementById('progressFill').style.width = '0%';
+            resetGameVariables();
             loadChallenge();
         }
 
@@ -728,6 +1096,218 @@
             } else {
                 document.exitFullscreen();
             }
+        }
+
+        // Variables para diferentes tipos de juego
+        let selectedConnection = null;
+        let connections = [];
+        let flippedCards = [];
+        let matchedPairs = 0;
+        let canFlip = true;
+
+        // Drag and Drop functions
+        function allowDrop(ev) {
+            ev.preventDefault();
+            ev.target.classList.add('dragover');
+        }
+
+        function dragStart(ev) {
+            ev.dataTransfer.setData("text", ev.target.getAttribute('data-value'));
+        }
+
+        function dropHandler(ev) {
+            ev.preventDefault();
+            const dropZone = document.getElementById('dropZone');
+            dropZone.classList.remove('dragover');
+
+            const data = ev.dataTransfer.getData("text");
+            const challenge = challenges[currentChallenge];
+
+            if (data === challenge.correct) {
+                dropZone.innerHTML = `<div style="color: #4CAF50; font-size: 1.5em; font-weight: bold;">${data}</div>`;
+                dropZone.style.background = 'linear-gradient(135deg, #4CAF50, #45a049)';
+                dropZone.style.borderColor = '#4CAF50';
+                score++;
+                updateSpaceship();
+                showCelebration('¡Fantástico! 🌟');
+            } else {
+                dropZone.innerHTML = `<div style="color: #f44336; font-size: 1.5em; font-weight: bold;">${data}</div>`;
+                dropZone.style.background = 'linear-gradient(135deg, #f44336, #d32f2f)';
+                dropZone.style.borderColor = '#f44336';
+                showCelebration('¡Sigue intentando! 💪');
+            }
+
+            // Deshabilitar drag items
+            document.querySelectorAll('.drag-item').forEach(item => {
+                item.draggable = false;
+                item.style.opacity = '0.6';
+                item.style.cursor = 'default';
+            });
+
+            updateProgress();
+            setTimeout(() => {
+                document.getElementById('nextBtn').style.display = 'block';
+            }, 2500);
+        }
+
+        // Connections functions
+        function selectConnection(side, index) {
+            const item = document.querySelector(`.connection-item.${side}[data-index="${index}"]`);
+
+            if (item.classList.contains('matched')) return;
+
+            if (selectedConnection) {
+                if (selectedConnection.side === side && selectedConnection.index === index) {
+                    // Deseleccionar
+                    item.classList.remove('selected');
+                    selectedConnection = null;
+                    return;
+                }
+
+                // Hacer conexión
+                const prevItem = document.querySelector(`.connection-item.${selectedConnection.side}[data-index="${selectedConnection.index}"]`);
+                prevItem.classList.remove('selected');
+
+                connections.push({
+                    left: side === 'left' ? index : selectedConnection.index,
+                    right: side === 'right' ? index : selectedConnection.index
+                });
+
+                selectedConnection = null;
+                document.getElementById('connectionsFeedback').innerHTML = `<div style="color: #4CAF50;">Conexión añadida! Total: ${connections.length}</div>`;
+
+                if (connections.length >= 3) {
+                    document.getElementById('checkConnectionsBtn').style.display = 'block';
+                }
+            } else {
+                // Seleccionar
+                document.querySelectorAll('.connection-item.selected').forEach(el => el.classList.remove('selected'));
+                item.classList.add('selected');
+                selectedConnection = { side, index };
+            }
+        }
+
+        function checkConnections() {
+            const challenge = challenges[currentChallenge];
+            let correctConnections = 0;
+
+            connections.forEach(conn => {
+                const isCorrect = challenge.correctPairs.some(pair =>
+                    (pair[0] === conn.left && pair[1] === conn.right)
+                );
+                if (isCorrect) correctConnections++;
+            });
+
+            if (correctConnections === challenge.correctPairs.length && connections.length === challenge.correctPairs.length) {
+                document.querySelectorAll('.connection-item').forEach(item => item.classList.add('matched'));
+                score++;
+                updateSpaceship();
+                showCelebration('¡Fantástico! 🌟');
+                document.getElementById('connectionsFeedback').innerHTML = `<div style="color: #4CAF50; font-weight: bold;">¡Todas las conexiones correctas! 🎉</div>`;
+            } else {
+                showCelebration('¡Revisa tus conexiones! 💪');
+                document.getElementById('connectionsFeedback').innerHTML = `<div style="color: #ff6b6b;">Conexiones correctas: ${correctConnections}/${challenge.correctPairs.length}</div>`;
+            }
+
+            document.getElementById('checkConnectionsBtn').style.display = 'none';
+            updateProgress();
+
+            setTimeout(() => {
+                document.getElementById('nextBtn').style.display = 'block';
+            }, 2500);
+        }
+
+        // Input functions
+        function checkInputLength() {
+            const input = document.getElementById('answerInput');
+            const btn = document.getElementById('checkInputBtn');
+            btn.disabled = input.value.trim().length < 2;
+        }
+
+        function checkInputAnswer() {
+            const input = document.getElementById('answerInput');
+            const challenge = challenges[currentChallenge];
+            const userAnswer = input.value.trim().toLowerCase();
+            const correctAnswer = challenge.answer.toLowerCase();
+
+            if (userAnswer === correctAnswer || userAnswer.includes(correctAnswer)) {
+                input.style.background = 'linear-gradient(135deg, #4CAF50, #45a049)';
+                input.style.color = 'white';
+                score++;
+                updateSpaceship();
+                showCelebration('¡Fantástico! 🌟');
+            } else {
+                input.style.background = 'linear-gradient(135deg, #f44336, #d32f2f)';
+                input.style.color = 'white';
+                showCelebration('¡Sigue intentando! 💪');
+            }
+
+            input.disabled = true;
+            document.getElementById('checkInputBtn').disabled = true;
+
+            updateProgress();
+            setTimeout(() => {
+                document.getElementById('nextBtn').style.display = 'block';
+            }, 2500);
+        }
+
+        // Memory functions
+        function flipCard(index) {
+            if (!canFlip || flippedCards.length >= 2) return;
+
+            const card = document.querySelector(`.memory-card[data-index="${index}"]`);
+            if (card.classList.contains('flipped') || card.classList.contains('matched')) return;
+
+            card.classList.add('flipped');
+            flippedCards.push({
+                index,
+                value: card.getAttribute('data-card')
+            });
+
+            if (flippedCards.length === 2) {
+                canFlip = false;
+                setTimeout(checkMemoryMatch, 1000);
+            }
+        }
+
+        function checkMemoryMatch() {
+            const [card1, card2] = flippedCards;
+            const element1 = document.querySelector(`.memory-card[data-index="${card1.index}"]`);
+            const element2 = document.querySelector(`.memory-card[data-index="${card2.index}"]`);
+
+            if (card1.value === card2.value) {
+                element1.classList.add('matched');
+                element2.classList.add('matched');
+                matchedPairs++;
+
+                const challenge = challenges[currentChallenge];
+                document.getElementById('memoryStats').textContent = `Parejas encontradas: ${matchedPairs} / ${challenge.cards.length / 2}`;
+
+                if (matchedPairs === challenge.cards.length / 2) {
+                    score++;
+                    updateSpaceship();
+                    showCelebration('¡Fantástico! Todas las parejas encontradas! 🌟');
+                    updateProgress();
+                    setTimeout(() => {
+                        document.getElementById('nextBtn').style.display = 'block';
+                    }, 2500);
+                }
+            } else {
+                element1.classList.remove('flipped');
+                element2.classList.remove('flipped');
+            }
+
+            flippedCards = [];
+            canFlip = true;
+        }
+
+        // Reset variables for each challenge
+        function resetGameVariables() {
+            selectedConnection = null;
+            connections = [];
+            flippedCards = [];
+            matchedPairs = 0;
+            canFlip = true;
         }
 
         // Inicializar
