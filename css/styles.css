@@ -302,11 +302,11 @@ body::before {
 /* === CARL PHOTO CAROUSEL === */
 .carl-photo-carousel {
   margin-bottom: var(--space-12);
-  background: linear-gradient(135deg, rgba(15, 15, 35, 0.9), rgba(30, 30, 60, 0.9));
+  background: linear-gradient(135deg, rgb(15, 15, 35), rgb(30, 30, 60));
   border-radius: var(--radius-2xl);
   padding: var(--space-8);
   border: 2px solid var(--electric-cyan);
-  box-shadow: 0 0 30px rgba(0, 255, 255, 0.3), var(--shadow-medium);
+  box-shadow: 0 0 30px rgba(0, 255, 255, 0.8), var(--shadow-medium);
   position: relative;
   overflow: hidden;
 }
@@ -319,7 +319,7 @@ body::before {
   aspect-ratio: 16/9;
   border-radius: var(--radius-lg);
   overflow: hidden;
-  background: rgba(0, 0, 0, 0.3);
+  background: rgb(0, 0, 0);
 }
 
 .carousel-track {
@@ -337,7 +337,7 @@ body::before {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  opacity: 0.7;
+  opacity: 0.9;
   transition: opacity var(--transition-normal);
 }
 
@@ -466,7 +466,7 @@ body::before {
   display: flex;
   align-items: center;
   gap: var(--space-8);
-  background: linear-gradient(135deg, rgba(15, 15, 35, 0.95), rgba(30, 30, 60, 0.95));
+  background: linear-gradient(135deg, rgb(15, 15, 35), rgb(30, 30, 60));
   border-radius: var(--radius-2xl);
   padding: var(--space-12);
   box-shadow: 0 0 30px rgba(199, 125, 255, 0.4), var(--shadow-medium);
@@ -548,7 +548,7 @@ body::before {
   color: var(--text-secondary);
   font-weight: 400;
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-  opacity: 0.95;
+  opacity: 1;
   margin-bottom: var(--space-6);
 }
 
@@ -628,59 +628,59 @@ body::before {
   border: 2px solid rgba(255, 255, 255, 0.1);
 }
 
-/* Efectos específicos por tipo de actividad - Neon Full Opacity */
+/* Efectos específicos por tipo de actividad - SIN TRANSPARENCIA */
 .game-card {
-  background: linear-gradient(135deg, rgba(147, 51, 234, 0.85), rgba(124, 58, 237, 0.8));
-  border: 2px solid rgba(0, 255, 255, 0.4);
+  background: linear-gradient(135deg, rgb(147, 51, 234), rgb(124, 58, 237));
+  border: 2px solid rgb(0, 255, 255);
   box-shadow:
-    0 0 20px rgba(147, 51, 234, 0.3),
-    0 8px 25px rgba(0, 0, 0, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    0 0 20px rgba(147, 51, 234, 0.8),
+    0 8px 25px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
 }
 
 .story-card {
-  background: linear-gradient(135deg, rgba(255, 0, 110, 0.85), rgba(233, 30, 99, 0.8));
-  border: 2px solid rgba(255, 0, 128, 0.4);
+  background: linear-gradient(135deg, rgb(255, 0, 110), rgb(233, 30, 99));
+  border: 2px solid rgb(255, 0, 128);
   box-shadow:
-    0 0 20px rgba(255, 0, 110, 0.3),
-    0 8px 25px rgba(0, 0, 0, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    0 0 20px rgba(255, 0, 110, 0.8),
+    0 8px 25px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
 }
 
 .videos-card {
-  background: linear-gradient(135deg, rgba(139, 92, 246, 0.85), rgba(124, 58, 237, 0.8));
-  border: 2px solid rgba(255, 20, 147, 0.4);
+  background: linear-gradient(135deg, rgb(139, 92, 246), rgb(124, 58, 237));
+  border: 2px solid rgb(255, 20, 147);
   box-shadow:
-    0 0 20px rgba(139, 92, 246, 0.3),
-    0 8px 25px rgba(0, 0, 0, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    0 0 20px rgba(139, 92, 246, 0.8),
+    0 8px 25px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
 }
 
 .chat-card {
-  background: linear-gradient(135deg, rgba(255, 214, 10, 0.85), rgba(245, 158, 11, 0.8));
-  border: 2px solid rgba(57, 255, 20, 0.4);
+  background: linear-gradient(135deg, rgb(255, 214, 10), rgb(245, 158, 11));
+  border: 2px solid rgb(57, 255, 20);
   box-shadow:
-    0 0 20px rgba(255, 214, 10, 0.3),
-    0 8px 25px rgba(0, 0, 0, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    0 0 20px rgba(255, 214, 10, 0.8),
+    0 8px 25px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
 }
 
 .audiostory-card {
-  background: linear-gradient(135deg, rgba(199, 125, 255, 0.85), rgba(157, 78, 221, 0.8));
-  border: 2px solid rgba(255, 7, 58, 0.4);
+  background: linear-gradient(135deg, rgb(199, 125, 255), rgb(157, 78, 221));
+  border: 2px solid rgb(255, 7, 58);
   box-shadow:
-    0 0 20px rgba(199, 125, 255, 0.3),
-    0 8px 25px rgba(0, 0, 0, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    0 0 20px rgba(199, 125, 255, 0.8),
+    0 8px 25px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
 }
 
 .biography-card {
-  background: linear-gradient(135deg, rgba(57, 255, 20, 0.85), rgba(50, 205, 50, 0.8));
-  border: 2px solid rgba(255, 214, 10, 0.4);
+  background: linear-gradient(135deg, rgb(57, 255, 20), rgb(50, 205, 50));
+  border: 2px solid rgb(255, 214, 10);
   box-shadow:
-    0 0 20px rgba(57, 255, 20, 0.3),
-    0 8px 25px rgba(0, 0, 0, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    0 0 20px rgba(57, 255, 20, 0.8),
+    0 8px 25px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
 }
 
 .activity-card::before {
@@ -744,7 +744,7 @@ body::before {
   font-weight: 400;
   flex-grow: 1;
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-  opacity: 0.95;
+  opacity: 1;
 }
 
 .activity-btn {
@@ -828,7 +828,7 @@ body::before {
 
 /* === CONTENT SECTIONS === */
 .content-section {
-  background: linear-gradient(135deg, rgba(15, 15, 35, 0.95), rgba(30, 30, 60, 0.95));
+  background: linear-gradient(135deg, rgb(15, 15, 35), rgb(30, 30, 60));
   border-radius: var(--radius-2xl);
   padding: var(--space-12);
   margin-bottom: var(--space-8);
@@ -1996,7 +1996,7 @@ body::before {
   width: 95vw;
   height: 95vh;
   max-width: 1200px;
-  background: linear-gradient(135deg, rgba(15, 15, 35, 0.95), rgba(30, 30, 60, 0.95));
+  background: linear-gradient(135deg, rgb(15, 15, 35), rgb(30, 30, 60));
   border-radius: var(--radius-xl);
   border: 2px solid var(--neon-green);
   box-shadow: 0 0 50px rgba(57, 255, 20, 0.4), var(--shadow-strong);
@@ -2178,7 +2178,7 @@ body::before {
 .modern-facts {
   margin-top: var(--space-20);
   text-align: center;
-  background: linear-gradient(135deg, rgba(15, 15, 35, 0.95), rgba(30, 30, 60, 0.95));
+  background: linear-gradient(135deg, rgb(15, 15, 35), rgb(30, 30, 60));
   border-radius: var(--radius-2xl);
   padding: var(--space-12);
   border: 2px solid var(--nebula-pink);
@@ -2321,7 +2321,7 @@ body::before {
 .modern-footer {
   text-align: center;
   padding: var(--space-12) var(--space-4);
-  background: linear-gradient(135deg, rgba(15, 15, 35, 0.95), rgba(30, 30, 60, 0.95));
+  background: linear-gradient(135deg, rgb(15, 15, 35), rgb(30, 30, 60));
   margin-top: var(--space-20);
   border-top: 2px solid var(--galaxy-violet);
   box-shadow: 0 0 20px rgba(199, 125, 255, 0.3), var(--shadow-soft);
@@ -2770,7 +2770,7 @@ input:focus,
   bottom: 20px;
   right: 20px;
   width: 300px;
-  background: linear-gradient(135deg, rgba(15, 15, 35, 0.95), rgba(30, 30, 60, 0.95));
+  background: linear-gradient(135deg, rgb(15, 15, 35), rgb(30, 30, 60));
   border: 2px solid var(--electric-cyan);
   border-radius: var(--radius-xl);
   box-shadow: 0 0 30px rgba(0, 255, 255, 0.4), var(--shadow-strong);
