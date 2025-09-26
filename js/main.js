@@ -782,6 +782,11 @@ function setupRadioPlaylist() {
             title: 'We Are Stardust',
             artist: 'Carl Sagan',
             src: 'assets/canciones/We Are Stardust.mp3'
+        },
+        {
+            title: 'Spot Radio Cosmos',
+            artist: 'Radio Cosmos',
+            src: 'assets/canciones/spot_rediocosmos.mp3'
         }
     ];
 
